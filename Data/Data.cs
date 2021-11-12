@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
+using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
@@ -11,9 +13,10 @@ namespace Data
 {
     public class Database : DbContext
     {
+        // Cryptography VAR
+        const string connStringFile = @".\\Connection\\connString.txt";
 
-        // Importació de totes les taules
-
+        // Import all the tables from Models
         public DbSet<Pokemon> Pokemons { get; set; }
         public DbSet<Moviment> Moviments { get; set; }
         public DbSet<Regal> Regals { get; set; }
@@ -206,7 +209,18 @@ namespace Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=172.24.127.4;Port=5432;Database=pokemonGolot;Username=postgres;Password=postgres");
+            optionsBuilder.UseNpgsql(decryptStringConn());
+            encryptStringConn();    
+        }
+
+        public string decryptStringConn()
+        {
+            File.Decrypt(connStringFile);
+            return System.IO.File.ReadAllText(connStringFile).ToString();
+        }
+
+        public void encryptStringConn() { 
+            File.Encrypt(connStringFile);
         }
     }
 }
