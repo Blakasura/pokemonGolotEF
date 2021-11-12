@@ -37,7 +37,8 @@ namespace Data
 
         protected override void OnModelCreating(ModelBuilder mdb)
         {
-            // Configura CONSTRAINTS
+            /////////////////////////////////////////// CONSTRAINTS Configuration ///////////////////////////////////////////
+
             mdb.Entity<Jugador_Pokemon_Gimnas>()
                 .HasKey(c => new { c.jugador_pokemonId, c.gimnasId });
 
@@ -201,7 +202,6 @@ namespace Data
                 .WithMany(f => f.rep_regal)
                 .HasForeignKey(e => e.id_jugador_enviat)
                 .OnDelete(DeleteBehavior.Restrict);
-
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
