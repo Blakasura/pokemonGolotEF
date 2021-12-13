@@ -1,7 +1,4 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using Data;
 using Model;
 
@@ -13,12 +10,20 @@ namespace Controllers
     {
         public static Database context = new Database();
         [HttpGet]
-        [Route("")]
-        public async Task<List<Jugador>> GetAll()
+        [Route("Jugadors")]
+        public async Task<List<Jugador>> GetJugadors()
         {
             var myTask = Task.Run(() => context.Jugadors.ToList());
             List<Jugador> jugadors = await myTask;
             return jugadors;
+        }
+        [HttpGet]
+        [Route("Equips")]
+        public async Task<List<Equip>> GetEquips()
+        {
+            var myTask = Task.Run(() => context.Equips.ToList());
+            List<Equip> equips = await myTask;
+            return equips;
         }
     }
 }

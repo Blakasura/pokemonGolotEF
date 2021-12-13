@@ -15,6 +15,7 @@ namespace Data
 
         // Import all the tables from Models
 
+        public DbSet<Equip> Equips { get; set; }
         public DbSet<Pokemon> Pokemons { get; set; }
         public DbSet<Moviment> Moviments { get; set; }
         public DbSet<Regal> Regals { get; set; }
