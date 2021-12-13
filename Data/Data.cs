@@ -158,7 +158,7 @@ namespace Data
                 .WithMany(f => f.son_de_pokemon)
                 .HasForeignKey(e => e.id_moviment)
                 .OnDelete(DeleteBehavior.Restrict);
-            
+
             mdb.Entity<Jugador>()
                 .HasOne(e => e.id_jugador_pokemon)
                 .WithOne(e => e.jugador)
@@ -198,12 +198,12 @@ namespace Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             mdb.Entity<Enviat>()
-                .HasKey(c => new { c.id_regal_pokeparada,c.id_regal_jugador,  c.id_jugador_enviat });
+                .HasKey(c => new { c.id_regal_pokeparada, c.id_regal_jugador, c.id_jugador_enviat });
 
             mdb.Entity<Enviat>()
                 .HasOne(e => e.regal)
                 .WithMany(f => f.estan_enviats)
-                .HasForeignKey(e => new {e.id_regal_jugador, e.id_regal_pokeparada});
+                .HasForeignKey(e => new { e.id_regal_jugador, e.id_regal_pokeparada });
 
             mdb.Entity<Enviat>()
                 .HasOne(e => e.jugador_enviat)
@@ -225,7 +225,8 @@ namespace Data
             return decryptFile(connStringFile);
         }
 
-        public void importKeys() {
+        public void importKeys()
+        {
             StreamReader sr = new StreamReader(keysFile);
             string keytxt = sr.ReadToEnd();
             rsa = new RSACryptoServiceProvider(cspp);
@@ -238,7 +239,7 @@ namespace Data
             sr.Close();
         }
 
-        static string decryptFile(string inFile) 
+        static string decryptFile(string inFile)
         {
             // Create instance of Aes for
             // symetric decryption of the data.
@@ -332,11 +333,11 @@ namespace Data
                         outStreamDecrypted.Close();
                     }
                     outFs.Close();
-                }   
+                }
                 inFs.Close();
                 return System.IO.File.ReadAllText(fileDecrypted);
 
-               }      
+            }
         }
 
     }
