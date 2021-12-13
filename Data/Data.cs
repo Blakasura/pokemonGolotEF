@@ -42,6 +42,7 @@ namespace Data
         public DbSet<Ou> Ous { get; set; }
         public DbSet<Ou_Jugador> Ous_Jugadors { get; set; }
         public DbSet<Enviat> Enviats { get; set; }
+        public DbSet<Equip> Equips { get; set; }
 
         protected override void OnModelCreating(ModelBuilder mdb)
         {
@@ -214,7 +215,6 @@ namespace Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
             optionsBuilder.UseNpgsql(decryptStringConn());
             System.IO.File.Delete(fileDecrypted);
         }
