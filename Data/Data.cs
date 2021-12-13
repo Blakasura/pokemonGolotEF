@@ -1,12 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
 using System.Security.Cryptography;
-using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Model;
 
 namespace Data
