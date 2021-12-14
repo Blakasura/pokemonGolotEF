@@ -15,7 +15,7 @@ namespace Data
 
         // Import all the tables from Models
 
-        public DbSet<Equip> Equip { get; set; }
+        public DbSet<Equip> Equips { get; set; }
         public DbSet<Pokemon> Pokemons { get; set; }
         public DbSet<Moviment> Moviments { get; set; }
         public DbSet<Regal> Regals { get; set; }
@@ -152,16 +152,6 @@ namespace Data
                 .WithMany(f => f.son_de_pokemon)
                 .HasForeignKey(e => e.id_moviment)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            mdb.Entity<Jugador>()
-                .HasOne(e => e.id_jugador_pokemon)
-                .WithOne(e => e.jugador)
-                .HasForeignKey<Jugador_Pokemon>(e => e.jugadorId);
-
-            mdb.Entity<Jugador_Pokemon>()
-                .HasOne(e => e.jugador)
-                .WithOne(e => e.id_jugador_pokemon)
-                .HasForeignKey<Jugador>(e => e.jugador_pokemon);
 
             mdb.Entity<Pokemon_Tipus>()
                 .HasKey(c => new { c.pokemon_id, c.tipus_id });

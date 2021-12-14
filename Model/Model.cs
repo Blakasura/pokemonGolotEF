@@ -66,10 +66,8 @@ namespace Model
         public double nivell_jugador { get; set; }
         public int maxim_objectes_jugador { get; set; }
         public int maxim_pokemons_jugador { get; set; }
-        public int jugador_pokemon { get; set; }
 
         // Navigations
-        public Jugador_Pokemon id_jugador_pokemon { get; set; }
         public Equip equip { get; set; }
         public List<Gimnas> gimnasos { get; set; }
         public virtual ICollection<Amistat> fa_amistats { get; set; }
