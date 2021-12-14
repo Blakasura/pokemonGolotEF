@@ -68,16 +68,16 @@ namespace Model
         public int maxim_pokemons_jugador { get; set; }
 
         // Navigations
-        public Equip equip { get; set; }
-        public List<Gimnas> gimnasos { get; set; }
-        public virtual ICollection<Amistat> fa_amistats { get; set; }
-        public virtual ICollection<Amistat> te_amistats { get; set; }
-        public virtual ICollection<Missio_Jugador> te_missio { get; set; }
-        public virtual ICollection<Objecte_Jugador> te_objectes { get; set; }
-        public virtual ICollection<Pokedex> registrat_pokemon { get; set; }
-        public virtual ICollection<Regal> te_regal { get; set; }
-        public virtual ICollection<Enviat> rep_regal { get; set; }
-        public virtual ICollection<Ou_Jugador> te_ou { get; set; }
+        public Equip? equip { get; set; }
+        public List<Gimnas>? gimnasos { get; set; }
+        public virtual ICollection<Amistat>? fa_amistats { get; set; }
+        public virtual ICollection<Amistat>? te_amistats { get; set; }
+        public virtual ICollection<Missio_Jugador>? te_missio { get; set; }
+        public virtual ICollection<Objecte_Jugador>? te_objectes { get; set; }
+        public virtual ICollection<Pokedex>? registrat_pokemon { get; set; }
+        public virtual ICollection<Regal>? te_regal { get; set; }
+        public virtual ICollection<Enviat>? rep_regal { get; set; }
+        public virtual ICollection<Ou_Jugador>? te_ou { get; set; }
     }
 
     public class Equip

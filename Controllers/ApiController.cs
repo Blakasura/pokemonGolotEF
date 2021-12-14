@@ -34,24 +34,22 @@ namespace Controllers
             return (player.Count<Jugador>() != 0);
         }
         [HttpPost]
-        [Route("addPlayer/{username}/{passwd}/{email}")]
-        public async Task<List<Jugador>> AddPlayer(string username, string contrasenya, string email)
+        [Route("addPlayer")]
+        public async Task<List<Jugador>> addPlayer([FromBody] Jugador newPlayer)
         {
             const int maxItems = 350;
             const int maxPokemon = 300;
             const int initialLevel = 1;
 
-            Jugador newPlayer = new Jugador
-            {
-                nom_jugador = username,
-                contrasenya_jugador = contrasenya,
-                email_jugador = email,
-                nivell_jugador = initialLevel,
-                maxim_objectes_jugador = maxItems,
-                maxim_pokemons_jugador = maxPokemon
-            };
-            var myTask = Task.Run(() => context.Jugadors.Add(newPlayer));
-            await myTask;
+            // newPlayer.nom_jugador = username;
+            // newPlayer.contrasenya_jugador = contrasenya;
+            // newPlayer.email_jugador = email;
+            newPlayer.nivell_jugador = initialLevel;
+            newPlayer.maxim_objectes_jugador = maxItems;
+            newPlayer.maxim_pokemons_jugador = maxPokemon;
+
+            context.Jugadors.Add(newPlayer);
+            await context.SaveChangesAsync();
             return await this.GetJugadors();
         }
     }
