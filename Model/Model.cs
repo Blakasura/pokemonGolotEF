@@ -23,9 +23,21 @@ namespace Model
         
         // Navigations
         public List<Moviment> moviments { get; set; }
-        public Pokemon id_pokemon_evolucio { get; set; }
         public virtual ICollection<Pokedex> vist_per_jugador { get; set;}
         public virtual ICollection<Pokemon_Tipus> te_tipus { get; set;}
+        public virtual ICollection<Possible_Moviment> te_moviments { get; set;}
+        public virtual ICollection<Evolucio> te_evolucio { get; set; }
+        public virtual ICollection<Evolucio> es_evolucio { get; set; }
+    }
+
+    public class Evolucio
+    {
+        public int id_pokemon { get; set; }
+        public int id_pokemon_evolucio { get; set; }
+        public int caramels_necessaris { get; set; }
+        
+        public virtual Pokemon pokemon { get; set; }
+        public virtual Pokemon evolucio { get; set; }
     }
 
     public class Moviment
@@ -39,11 +51,13 @@ namespace Model
         public string nom_moviment { get; set; }
         public int potencia_moviment { get; set; }
         public double escalat_perduda_moviment { get; set; }
+        public int tipus_id { get; set; }
 
         // Navigations
         public Tipus tipus { get; set; }
         public List<Pokemon> pokemons { get; set; }
         public virtual ICollection<Pokemon_Moviment> son_de_pokemon { get; set;}
+        public virtual ICollection<Possible_Moviment> poden_ser_de_pokemon { get; set; }
     }
 
     public class Tipus
@@ -55,6 +69,7 @@ namespace Model
         public string nom_tipus { get; set; }
 
         // Navigations
+        public virtual ICollection<Moviment> te_moviments { get; set; }
         public virtual ICollection<Efectivitat> fa_efectivitat { get; set;}
         public virtual ICollection<Efectivitat> te_efectivitat { get; set;}
         public virtual ICollection<Pokemon_Tipus> te_pokemon { get; set;}
@@ -72,10 +87,8 @@ namespace Model
         public double nivell_jugador { get; set; }
         public int maxim_objectes_jugador { get; set; }  
         public int maxim_pokemons_jugador { get; set; }
-        public int jugador_pokemon { get; set;}
 
         // Navigations
-        public Jugador_Pokemon id_jugador_pokemon { get; set;}
         public Equip equip { get; set; }
         public List<Gimnas> gimnasos { get; set; }
         public virtual ICollection<Amistat> fa_amistats { get; set;}
@@ -350,6 +363,17 @@ namespace Model
         // Navigations
         public Pokemon pokemon { get; set;}
         public Tipus tipus { get; set;}
+    }
+
+    public class Possible_Moviment { 
+    
+        // PK - FK
+        public int pokemon_id { get; set; }
+        public int moviment_id { get; set; }
+    
+        // Navigators
+        public Pokemon pokemon { get; set; }
+        public Moviment moviment { get; set; }
     }
 }
 
