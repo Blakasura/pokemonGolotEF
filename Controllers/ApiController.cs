@@ -74,22 +74,33 @@ namespace Controllers
 
         [HttpPost]
         [Route("addPlayer")]
-        public async Task<List<Jugador>> addPlayer([FromBody] Jugador newPlayer)
+        public HttpResponseMessage addPlayer([FromBody] Jugador newPlayer)
         {
-            const int maxItems = 350;
-            const int maxPokemon = 300;
-            const int initialLevel = 1;
+            if (context.Jugadors.First(j => j.email_jugador == newPlayer.email_jugador) == null) 
+            { 
+                const int maxItems = 350;
+                const int maxPokemon = 300;
+                const int initialLevel = 1;
 
-            // newPlayer.nom_jugador = username;
-            // newPlayer.contrasenya_jugador = contrasenya;
-            // newPlayer.email_jugador = email;
-            newPlayer.nivell_jugador = initialLevel;
-            newPlayer.maxim_objectes_jugador = maxItems;
-            newPlayer.maxim_pokemons_jugador = maxPokemon;
+                // newPlayer.nom_jugador = username;
+                // newPlayer.contrasenya_jugador = contrasenya;
+                // newPlayer.email_jugador = email;
+                newPlayer.nivell_jugador = initialLevel;
+                newPlayer.maxim_objectes_jugador = maxItems;
+                newPlayer.maxim_pokemons_jugador = maxPokemon;
 
-            context.Jugadors.Add(newPlayer);
-            await context.SaveChangesAsync();
-            return await this.GetJugadors();
+                context.Jugadors.Add(newPlayer);
+                context.SaveChangesAsync();
+                return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+
+            } else { 
+
+                var response = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
+                response.Content = new StringContent("Aquest correu electrònic s'està fent servir per un altre compte");
+                return response;
+                
+            }
+
         }
     }
 }
