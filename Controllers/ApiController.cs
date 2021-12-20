@@ -62,14 +62,16 @@ namespace Controllers
             List<Equip> equips = await myTask;
             return equips;
         }
+        
         [HttpGet]
-        [Route("Jugador|user={username}|passwd={contrasenya}")]
-        public async Task<Boolean> LogIn(string username, string contrasenya)
+        [Route("LogIn")]
+        public async Task<Boolean> LogIn([FromBody] Jugador player)
         {
-            var myTask = Task.Run(() => context.Jugadors.Where(j => j.nom_jugador.Equals(username) && j.contrasenya_jugador.Equals(contrasenya)).ToList());
-            List<Jugador> player = await myTask;
-            return (player.Count<Jugador>() != 0);
+            var myTask = Task.Run(() => context.Jugadors.Where(j => j.nom_jugador.Equals(player.nom_jugador) && j.contrasenya_jugador.Equals(player.contrasenya_jugador)).ToList());
+            List<Jugador> players = await myTask;
+            return (players.Count<Jugador>() != 0);
         }
+
         [HttpPost]
         [Route("addPlayer")]
         public async Task<List<Jugador>> addPlayer([FromBody] Jugador newPlayer)
