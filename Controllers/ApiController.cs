@@ -22,11 +22,37 @@ namespace Controllers
         [Route("Pokemons")]
         public async Task<List<Pokemon>> GetPokemons()
         {
-            var myTask = Task.Run(() => context.Pokemons.ToList());
+            var myTask = Task.Run(() => context.Pokemons.OrderBy(p => p.id_pokemon).ToList());
             List<Pokemon> pokemons = await myTask;
             return pokemons;
         }
 
+        [HttpGet]
+        [Route("Moviments")]
+        public async Task<List<Moviment>> GetMoviments()
+        {
+            var myTask = Task.Run(() => context.Moviments.OrderBy(m => m.id_moviment).ToList());
+            List<Moviment> moviments = await myTask;
+            return moviments;
+        }
+
+        [HttpGet]
+        [Route("Evolucions")]
+        public async Task<List<Evolucio>> GetEvolucions()
+        {
+            var myTask = Task.Run(() => context.Evolucions.OrderBy(e => e.id_pokemon).ToList());
+            List<Evolucio> Evolucions = await myTask;
+            return Evolucions;
+        }
+
+        [HttpGet]
+        [Route("TipusPokemons")]
+        public async Task<List<Pokemon_Tipus>> GetPokemonTypes()
+        {
+            var myTask = Task.Run(() => context.Pokemon_Tipus.ToList());
+            List<Pokemon_Tipus> Pokemon_Tipus = await myTask;
+            return Pokemon_Tipus;
+        }
 
         [HttpGet]
         [Route("Equips")]

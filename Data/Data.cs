@@ -47,6 +47,7 @@ namespace Data
         public DbSet<Enviat> Enviats { get; set; }
         public DbSet<Equip> Equips { get; set; }
         public DbSet<Evolucio> Evolucions { get; set; }
+        public DbSet<Pokemon_Tipus> Pokemon_Tipus { get; set; }
 
         protected override async void OnModelCreating(ModelBuilder mdb)
         {
