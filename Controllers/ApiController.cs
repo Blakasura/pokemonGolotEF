@@ -45,14 +45,14 @@ namespace Controllers
             return Evolucions;
         }
 
-        [HttpGet]
+        /*[HttpGet]
         [Route("TipusPokemons")]
         public async Task<List<Pokemon_Tipus>> GetPokemonTypes()
         {
             var myTask = Task.Run(() => context.Pokemon_Tipus.ToList());
             List<Pokemon_Tipus> Pokemon_Tipus = await myTask;
             return Pokemon_Tipus;
-        }
+        }*/
 
         [HttpGet]
         [Route("Equips")]
