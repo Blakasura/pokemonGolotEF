@@ -243,6 +243,7 @@ namespace Model
         public int IV_vida_jugador_pokemon { get; set; }
         public int nivell_jugador_pokemon { get; set; }
         public int vida_pokemon { get; set; }
+        public string ubicacio_pokemon { get; set;}
 
         // FK
         public string jugadorId { get; set;}
