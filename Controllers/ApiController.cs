@@ -17,6 +17,17 @@ namespace Controllers
             List<Jugador> jugadors = await myTask;
             return jugadors;
         }
+
+        [HttpGet]
+        [Route("Pokemons")]
+        public async Task<List<Pokemon>> GetPokemons()
+        {
+            var myTask = Task.Run(() => context.Pokemons.ToList());
+            List<Pokemon> pokemons = await myTask;
+            return pokemons;
+        }
+
+
         [HttpGet]
         [Route("Equips")]
         public async Task<List<Equip>> GetEquips()

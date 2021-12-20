@@ -1,4 +1,10 @@
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+using Microsoft.EntityFrameworkCore.Design;
+using System.Text;
 
 namespace Model
 {
@@ -14,12 +20,24 @@ namespace Model
         public int defensa_pokemon { get; set; }
         public int max_cp_pokemon { get; set; }
         public string rarity { get; set; }
-
+        
         // Navigations
         public List<Moviment> moviments { get; set; }
-        public Pokemon id_pokemon_evolucio { get; set; }
-        public virtual ICollection<Pokedex> vist_per_jugador { get; set; }
-        public virtual ICollection<Pokemon_Tipus> te_tipus { get; set; }
+        public virtual ICollection<Pokedex> vist_per_jugador { get; set;}
+        public virtual ICollection<Pokemon_Tipus> te_tipus { get; set;}
+        public virtual ICollection<Possible_Moviment> te_moviments { get; set;}
+        public virtual ICollection<Evolucio> te_evolucio { get; set; }
+        public virtual ICollection<Evolucio> es_evolucio { get; set; }
+    }
+
+    public class Evolucio
+    {
+        public int id_pokemon { get; set; }
+        public int id_pokemon_evolucio { get; set; }
+        public int caramels_necessaris { get; set; }
+        
+        public virtual Pokemon pokemon { get; set; }
+        public virtual Pokemon evolucio { get; set; }
     }
 
     public class Moviment
@@ -33,11 +51,13 @@ namespace Model
         public string nom_moviment { get; set; }
         public int potencia_moviment { get; set; }
         public double escalat_perduda_moviment { get; set; }
+        public int tipus_id { get; set; }
 
         // Navigations
         public Tipus tipus { get; set; }
         public List<Pokemon> pokemons { get; set; }
-        public virtual ICollection<Pokemon_Moviment> son_de_pokemon { get; set; }
+        public virtual ICollection<Pokemon_Moviment> son_de_pokemon { get; set;}
+        public virtual ICollection<Possible_Moviment> poden_ser_de_pokemon { get; set; }
     }
 
     public class Tipus
@@ -49,9 +69,10 @@ namespace Model
         public string nom_tipus { get; set; }
 
         // Navigations
-        public virtual ICollection<Efectivitat> fa_efectivitat { get; set; }
-        public virtual ICollection<Efectivitat> te_efectivitat { get; set; }
-        public virtual ICollection<Pokemon_Tipus> te_pokemon { get; set; }
+        public virtual ICollection<Moviment> te_moviments { get; set; }
+        public virtual ICollection<Efectivitat> fa_efectivitat { get; set;}
+        public virtual ICollection<Efectivitat> te_efectivitat { get; set;}
+        public virtual ICollection<Pokemon_Tipus> te_pokemon { get; set;}
 
     }
 
@@ -64,20 +85,20 @@ namespace Model
         public string email_jugador { get; set; }
         public string contrasenya_jugador { get; set; }
         public double nivell_jugador { get; set; }
-        public int maxim_objectes_jugador { get; set; }
+        public int maxim_objectes_jugador { get; set; }  
         public int maxim_pokemons_jugador { get; set; }
 
         // Navigations
-        public Equip? equip { get; set; }
-        public List<Gimnas>? gimnasos { get; set; }
-        public virtual ICollection<Amistat>? fa_amistats { get; set; }
-        public virtual ICollection<Amistat>? te_amistats { get; set; }
-        public virtual ICollection<Missio_Jugador>? te_missio { get; set; }
-        public virtual ICollection<Objecte_Jugador>? te_objectes { get; set; }
-        public virtual ICollection<Pokedex>? registrat_pokemon { get; set; }
-        public virtual ICollection<Regal>? te_regal { get; set; }
-        public virtual ICollection<Enviat>? rep_regal { get; set; }
-        public virtual ICollection<Ou_Jugador>? te_ou { get; set; }
+        public Equip equip { get; set; }
+        public List<Gimnas> gimnasos { get; set; }
+        public virtual ICollection<Amistat> fa_amistats { get; set;}
+        public virtual ICollection<Amistat> te_amistats { get; set;}
+        public virtual ICollection<Missio_Jugador> te_missio { get; set;}
+        public virtual ICollection<Objecte_Jugador> te_objectes { get; set;}
+        public virtual ICollection<Pokedex> registrat_pokemon { get; set;}
+        public virtual ICollection<Regal> te_regal { get; set;}
+        public virtual ICollection<Enviat> rep_regal { get; set;}
+        public virtual ICollection<Ou_Jugador> te_ou { get; set;}
     }
 
     public class Equip
@@ -97,7 +118,7 @@ namespace Model
         public double preu_objecte { get; set; }
 
         // Navigations
-        public virtual ICollection<Objecte_Jugador> pertany_a_jugador { get; set; }
+        public virtual ICollection<Objecte_Jugador> pertany_a_jugador { get; set;}
     }
 
     public class Ou
@@ -110,7 +131,7 @@ namespace Model
         public double distancia_ou { get; set; }
 
         // Navigations
-        public virtual ICollection<Ou_Jugador> pertany_a_jugador { get; set; }
+        public virtual ICollection<Ou_Jugador> pertany_a_jugador { get; set;}
     }
 
     public class Pokeparada
@@ -122,7 +143,7 @@ namespace Model
         public string ubicacio_pokeparada { get; set; }
 
         // Navigations
-        public virtual ICollection<Regal> dona_regal { get; set; }
+        public virtual ICollection<Regal> dona_regal { get; set;}
     }
 
     public class Gimnas
@@ -137,7 +158,7 @@ namespace Model
         // Navigations
         public Equip equip { get; set; }
         public List<Jugador> jugadors { get; set; }
-        public virtual ICollection<Jugador_Pokemon_Gimnas> te_pokemons { get; set; }
+        public virtual ICollection<Jugador_Pokemon_Gimnas> te_pokemons { get; set;}
 
     }
 
@@ -145,7 +166,7 @@ namespace Model
     {
         [Key]
         public int id_incursio { get; set; }
-
+        
         // Attributes
         public string ubicacio_incursio { get; set; }
 
@@ -163,22 +184,22 @@ namespace Model
         // Navigations
         public Pokeparada pokeparada { get; set; }
         public Jugador jugador { get; set; }
-        public virtual ICollection<Enviat> estan_enviats { get; set; }
+        public virtual ICollection<Enviat> estan_enviats { get; set;}
     }
 
-    public class Enviat
-    {
+    public class Enviat 
+    {  
         // PK - FK
-        public int id_regal_pokeparada { get; set; }
-        public string id_regal_jugador { get; set; }
-        public string id_jugador_enviat { get; set; }
+        public int id_regal_pokeparada { get; set;}
+        public string id_regal_jugador { get; set;}
+        public string id_jugador_enviat { get; set;}
 
         // Attributes
         public bool obert { get; set; }
-
+        
         // Navigations
-        public Regal regal { get; set; }
-        public Jugador jugador_enviat { get; set; }
+        public Regal regal { get; set;}
+        public Jugador jugador_enviat { get; set;}
     }
 
     public class Missio
@@ -193,15 +214,15 @@ namespace Model
         public bool tipus_misio { get; set; }
 
         // Navigations
-        public virtual ICollection<Missio_Jugador> te_jugadors { get; set; }
+        public virtual ICollection<Missio_Jugador> te_jugadors { get; set;}
     }
 
     public class Objecte_Jugador
     {
         // PK - FK 
-        public string jugadorId { get; set; }
-        public string objecteId { get; set; }
-
+        public string jugadorId { get; set;}
+        public string objecteId { get; set;}
+       
         // Attributes
         public int quantitat { get; set; }
 
@@ -224,21 +245,21 @@ namespace Model
         public int vida_pokemon { get; set; }
 
         // FK
-        public string jugadorId { get; set; }
+        public string jugadorId { get; set;}
 
 
         // Navigations
         public Jugador jugador { get; set; }
         public Pokemon pokemon { get; set; }
-        public virtual ICollection<Jugador_Pokemon_Gimnas> esta_a_gimnas { get; set; }
-        public virtual ICollection<Pokemon_Moviment> te_moviments { get; set; }
+        public virtual ICollection<Jugador_Pokemon_Gimnas> esta_a_gimnas { get; set;}
+        public virtual ICollection<Pokemon_Moviment> te_moviments { get; set;}
 
     }
     public class Ou_Jugador
     {
         // PK - FK
-        public string jugador_id { get; set; }
-        public string ou_id { get; set; }
+        public string jugador_id { get; set;}
+        public string ou_id { get; set;}
 
         // Attributes
         public double distancia { get; set; }
@@ -246,13 +267,13 @@ namespace Model
         // Navigations
         public Jugador jugador { get; set; }
         public Ou ou { get; set; }
-
+        
     }
     public class Jugador_Pokemon_Gimnas
     {
         // PK - FK
-        public int jugador_pokemonId { get; set; }
-        public int gimnasId { get; set; }
+        public int jugador_pokemonId { get; set;}
+        public int gimnasId { get; set;}
 
         // Navigations
         public Jugador_Pokemon jugador_pokemon { get; set; }
@@ -262,14 +283,14 @@ namespace Model
     public class Amistat
     {
         // PK - FK
-        public string JugadorId { get; set; }
-        public string JugadorId2 { get; set; }
+        public string JugadorId { get; set;}
+        public string JugadorId2 { get; set;}
 
         // Attributes
         public int nivell_amistat { get; set; }
         public bool intercanvi_amistat { get; set; }
         public bool activat_amistat { get; set; }
-
+    
         // Navigations
         public virtual Jugador jugador1 { get; set; }
         public virtual Jugador jugador2 { get; set; }
@@ -283,7 +304,7 @@ namespace Model
 
         // Attributes
         public double efectivitat { get; set; }
-
+        
         // Navigations
         public Tipus tipus1 { get; set; }
         public Tipus tipus2 { get; set; }
@@ -293,7 +314,7 @@ namespace Model
     {
         // PK - FK
         public int pokemonId { get; set; }
-        public string jugadorId { get; set; }
+        public string jugadorId { get; set;}
 
         // Attributes
         public bool vist_pokedex { get; set; }
@@ -302,16 +323,16 @@ namespace Model
         // Navigations
         public Pokemon pokemon { get; set; }
         public Jugador jugador { get; set; }
-
+        
     }
 
 
     public class Missio_Jugador
     {
         // PK - FK
-        public string jugadorId { get; set; }
-        public int missioId { get; set; }
-
+        public string jugadorId { get; set;}
+        public int missioId { get; set;}
+         
         // Attributes
         public int progres_missio { get; set; }
         public bool activa_missio { get; set; }
@@ -322,27 +343,36 @@ namespace Model
     }
 
     public class Pokemon_Moviment
-    {
+    { 
         // PK - FK
-        public int id_jugador_pokemon { get; set; }
+        public int id_jugador_pokemon { get; set;}
         public int id_moviment { get; set; }
 
         // Navigations
-        public Jugador_Pokemon jugador_pokemon { get; set; }
-        public Moviment moviment { get; set; }
+        public Jugador_Pokemon jugador_pokemon { get; set;}
+        public Moviment moviment { get; set;}
 
     }
 
-    public class Pokemon_Tipus
-    {
-
+    public class Pokemon_Tipus { 
+    
         // PK - FK
-        public int pokemon_id { get; set; }
-        public int tipus_id { get; set; }
+        public int pokemon_id { get; set;}
+        public int tipus_id { get; set;}
 
         // Navigations
+        public Pokemon pokemon { get; set;}
+        public Tipus tipus { get; set;}
+    }
+
+    public class Possible_Moviment { 
+    
+        // PK - FK
+        public int pokemon_id { get; set; }
+        public int moviment_id { get; set; }
+    
+        // Navigators
         public Pokemon pokemon { get; set; }
-        public Tipus tipus { get; set; }
+        public Moviment moviment { get; set; }
     }
 }
-

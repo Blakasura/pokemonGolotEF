@@ -1,6 +1,16 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.IO;
 using System.Security.Cryptography;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Model;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Net.Http.Headers;
 
 namespace Data
 {
@@ -9,13 +19,12 @@ namespace Data
         // Cryptography VAR
         static RSACryptoServiceProvider rsa;
         static CspParameters cspp = new CspParameters();
-        const string connStringFile = @".\\Connection\\connString.enc";
-        const string keysFile = @".\\Connection\\rsaKeys.txt";
-        const string fileDecrypted = @".\\Connection\decryptedString.txt";
+        const string connStringFile = @".\Connection\\connString.enc";
+        const string keysFile = @".\Connection\\rsaKeys.txt";
+        const string fileDecrypted = @".\Connection\\decryptedString.txt";
 
         // Import all the tables from Models
 
-        public DbSet<Equip> Equips { get; set; }
         public DbSet<Pokemon> Pokemons { get; set; }
         public DbSet<Moviment> Moviments { get; set; }
         public DbSet<Regal> Regals { get; set; }
@@ -36,9 +45,55 @@ namespace Data
         public DbSet<Ou> Ous { get; set; }
         public DbSet<Ou_Jugador> Ous_Jugadors { get; set; }
         public DbSet<Enviat> Enviats { get; set; }
+        public DbSet<Equip> Equips { get; set; }
+        public DbSet<Evolucio> Evolucions { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder mdb)
+        protected override async void OnModelCreating(ModelBuilder mdb)
         {
+            // POKEMONS ////////////////////////////////////////////
+            HttpClient pogoApi = new HttpClient();
+            HttpClient pokeApi = new HttpClient();
+            pogoApi.BaseAddress = new Uri("https://pogoapi.net/api/v1/");
+            pokeApi.BaseAddress = new Uri("https://pokeapi.co/api/v2/");
+
+            // Add an Accept header for JSON format.
+            pogoApi.DefaultRequestHeaders.Accept.Add(
+            new MediaTypeWithQualityHeaderValue("application/json"));
+
+            List<Pokemon> pokemons;
+            List<Moviment> moviments;
+            List<Tipus> tipus;
+            List<Possible_Moviment> possibles_moviments;
+            List<Pokemon_Tipus> pokemons_tipus;
+            List<Evolucio> evolucions;
+
+            pokemons = await data_loading.getPokemons(pogoApi);
+            tipus = await data_loading.getTypes(pokeApi);
+            moviments = await data_loading.getMoves(pogoApi, tipus);
+            possibles_moviments = await data_loading.getPokemonMoves(pogoApi, pokemons, moviments);
+            pokemons_tipus = await data_loading.getPokemonTypes(pogoApi, pokemons, tipus);
+            evolucions = await data_loading.getPokemonEvolutions(pogoApi, pokemons);
+
+            /////////////////////////////////////////// DATA Configuration ///////////////////////////////////////////
+
+            mdb.Entity<Pokemon>()
+                .HasData(pokemons);
+
+            mdb.Entity<Tipus>()
+                .HasData(tipus);
+
+            mdb.Entity<Moviment>()
+                .HasData(moviments);
+
+            mdb.Entity<Possible_Moviment>()
+                .HasData(possibles_moviments);
+
+            mdb.Entity<Pokemon_Tipus>()
+                .HasData(pokemons_tipus);
+
+            mdb.Entity<Evolucio>()
+                .HasData(evolucions);
+
             /////////////////////////////////////////// CONSTRAINTS Configuration ///////////////////////////////////////////
 
             mdb.Entity<Jugador_Pokemon_Gimnas>()
@@ -77,7 +132,7 @@ namespace Data
                .WithMany(f => f.fa_amistats)
                .HasForeignKey(e => e.JugadorId);
 
-            mdb.Entity<Amistat>()
+           mdb.Entity<Amistat>()
                 .HasOne(e => e.jugador2)
                 .WithMany(f => f.te_amistats)
                 .HasForeignKey(e => e.JugadorId2)
@@ -139,6 +194,12 @@ namespace Data
                 .HasForeignKey(e => e.id_pokeparada)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            mdb.Entity<Moviment>()
+                .HasOne(e => e.tipus)
+                .WithMany(f => f.te_moviments)
+                .HasForeignKey(e => e.tipus_id)
+                .OnDelete(DeleteBehavior.Restrict);
+
             mdb.Entity<Pokemon_Moviment>()
                 .HasKey(c => new { c.id_jugador_pokemon, c.id_moviment });
 
@@ -167,6 +228,20 @@ namespace Data
                 .HasForeignKey(e => e.pokemon_id)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            mdb.Entity<Possible_Moviment>()
+                .HasKey(c => new { c.pokemon_id, c.moviment_id });
+
+            mdb.Entity<Possible_Moviment>()
+                .HasOne(e => e.pokemon)
+                .WithMany(f => f.te_moviments)
+                .HasForeignKey(e => e.pokemon_id);
+
+            mdb.Entity<Possible_Moviment>()
+                .HasOne(e => e.moviment)
+                .WithMany(f => f.poden_ser_de_pokemon)
+                .HasForeignKey(e => e.moviment_id)
+                .OnDelete(DeleteBehavior.Restrict);
+
             mdb.Entity<Ou_Jugador>()
                 .HasKey(c => new { c.jugador_id, c.ou_id });
 
@@ -182,26 +257,40 @@ namespace Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             mdb.Entity<Enviat>()
-                .HasKey(c => new { c.id_regal_pokeparada, c.id_regal_jugador, c.id_jugador_enviat });
+                .HasKey(c => new { c.id_regal_pokeparada,c.id_regal_jugador,  c.id_jugador_enviat });
 
             mdb.Entity<Enviat>()
                 .HasOne(e => e.regal)
                 .WithMany(f => f.estan_enviats)
-                .HasForeignKey(e => new { e.id_regal_jugador, e.id_regal_pokeparada });
+                .HasForeignKey(e => new {e.id_regal_jugador, e.id_regal_pokeparada});
 
             mdb.Entity<Enviat>()
                 .HasOne(e => e.jugador_enviat)
                 .WithMany(f => f.rep_regal)
                 .HasForeignKey(e => e.id_jugador_enviat)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            mdb.Entity<Evolucio>()
+               .HasKey(c => new { c.id_pokemon, c.id_pokemon_evolucio});
+
+            mdb.Entity<Evolucio>()
+                .HasOne(p => p.pokemon)
+                .WithMany(f => f.te_evolucio)
+                .HasForeignKey(p => p.id_pokemon);
+
+            mdb.Entity<Evolucio>()
+                .HasOne(p => p.evolucio)
+                .WithMany(f => f.es_evolucio)
+                .HasForeignKey(p => p.id_pokemon_evolucio);
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
             optionsBuilder.UseNpgsql(decryptStringConn());
             System.IO.File.Delete(fileDecrypted);
         }
+
 
         public string decryptStringConn()
         {
@@ -209,8 +298,7 @@ namespace Data
             return decryptFile(connStringFile);
         }
 
-        public void importKeys()
-        {
+        public void importKeys() {
             StreamReader sr = new StreamReader(keysFile);
             string keytxt = sr.ReadToEnd();
             rsa = new RSACryptoServiceProvider(cspp);
@@ -223,7 +311,7 @@ namespace Data
             sr.Close();
         }
 
-        static string decryptFile(string inFile)
+        static string decryptFile(string inFile) 
         {
             // Create instance of Aes for
             // symetric decryption of the data.
@@ -317,11 +405,11 @@ namespace Data
                         outStreamDecrypted.Close();
                     }
                     outFs.Close();
-                }
+                }   
                 inFs.Close();
                 return System.IO.File.ReadAllText(fileDecrypted);
 
-            }
+               }      
         }
 
     }

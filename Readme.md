@@ -11,3 +11,4 @@
 # - dotnet add package Microsoft.EntityFrameworkCore.Relational
 # - dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
 # - dotnet add package Swashbuckle.AspNetCore
+# - dotnet add package Newtonsoft.Json --version 13.0.1
