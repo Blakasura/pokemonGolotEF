@@ -77,8 +77,8 @@ namespace Controllers
         [Route("addPlayer")]
         public HttpResponseMessage addPlayer([FromBody] Jugador newPlayer)
         {
-            if (context.Jugadors.First(j => j.email_jugador == newPlayer.email_jugador) == null) 
-            { 
+            //if (context.Jugadors.First(j => j.email_jugador == newPlayer.email_jugador) == null) 
+            //{ 
                 const int maxItems = 350;
                 const int maxPokemon = 300;
                 const int initialLevel = 1;
@@ -94,11 +94,11 @@ namespace Controllers
                 context.SaveChangesAsync();
                 return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
 
-            } else { 
+          //  } else { 
 
-                var response = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
-                response.Content = new StringContent("Aquest correu electrònic s'està fent servir per un altre compte");
-                return response;
+               // var response = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
+               // response.Content = new StringContent("Aquest correu electrònic s'està fent servir per un altre compte");
+               // return response;
                 
             }
 
