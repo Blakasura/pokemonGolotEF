@@ -72,7 +72,7 @@ namespace Controllers
             return equips;
         }
         
-        [HttpGet]
+        [HttpPost]
         [Route("LogIn")]
         public async Task<Boolean> LogIn([FromBody] Jugador player)
         {
