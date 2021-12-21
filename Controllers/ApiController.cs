@@ -83,7 +83,7 @@ namespace Controllers
 
         [HttpPost]
         [Route("addPlayer")]
-        public HttpResponseMessage addPlayer([FromBody] Jugador newPlayer)
+        public async HttpResponseMessage addPlayer([FromBody] Jugador newPlayer)
         {
             var myTask = Task.Run(() => context.Jugadors.Where(j => j.nom_jugador.Equals(newPlayer.email_jugador)).ToList());
             List<Jugador> players = await myTask;
