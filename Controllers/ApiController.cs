@@ -57,7 +57,7 @@ namespace Controllers
 
         [HttpGet]
         [Route("Tipus")]
-        public async Task<List<Tipus>> GetPokemonTypes()
+        public async Task<List<Tipus>> GetTipus()
         {
             var myTask = Task.Run(() => context.Tipus.ToList());
             List<Tipus> Tipus = await myTask;
