@@ -4,17 +4,17 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:13121",
+      "applicationUrl": "http://localhost:54746",
       "sslPort": 0
     }
   },
   "profiles": {
-    "pokemonGolotEF": {
+    "PokemonGolotEF": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "http://172.24.2.167:5298",
+      "applicationUrl": "http://172.24.127.4:5187",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
