@@ -56,6 +56,15 @@ namespace Controllers
         }
 
         [HttpGet]
+        [Route("Tipus")]
+        public async Task<List<Tipus>> GetPokemonTypes()
+        {
+            var myTask = Task.Run(() => context.Tipus.ToList());
+            List<Tipus> Tipus = await myTask;
+            return Tipus;
+        }
+
+        [HttpGet]
         [Route("Equips")]
         public async Task<List<Equip>> GetEquips()
         {
