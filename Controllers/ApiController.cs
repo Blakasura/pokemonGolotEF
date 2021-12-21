@@ -15,6 +15,7 @@ namespace Controllers
         {
             var myTask = Task.Run(() => context.Jugadors.ToList());
             List<Jugador> jugadors = await myTask;
+            Console.WriteLine("[SERVER] Query 'Jugadors' executed correctly");
             return jugadors;
         }
 
@@ -24,6 +25,7 @@ namespace Controllers
         {
             var myTask = Task.Run(() => context.Pokemons.OrderBy(p => p.id_pokemon).ToList());
             List<Pokemon> pokemons = await myTask;
+            Console.WriteLine("[SERVER] Query 'Pokemons' executed correctly");
             return pokemons;
         }
 
@@ -33,6 +35,7 @@ namespace Controllers
         {
             var myTask = Task.Run(() => context.Moviments.OrderBy(m => m.id_moviment).ToList());
             List<Moviment> moviments = await myTask;
+            Console.WriteLine("[SERVER] Query 'Moviments' executed correctly");
             return moviments;
         }
 
@@ -42,6 +45,7 @@ namespace Controllers
         {
             var myTask = Task.Run(() => context.Evolucions.OrderBy(e => e.id_pokemon).ToList());
             List<Evolucio> Evolucions = await myTask;
+            Console.WriteLine("[SERVER] Query 'Evolucions' executed correctly");
             return Evolucions;
         }
 
@@ -51,6 +55,7 @@ namespace Controllers
         {
             var myTask = Task.Run(() => context.Pokemon_Tipus.ToList());
             List<Pokemon_Tipus> Pokemon_Tipus = await myTask;
+            Console.WriteLine("[SERVER] Query 'TipusPokemons' executed correctly");
             return Pokemon_Tipus;
         }
 
@@ -60,6 +65,7 @@ namespace Controllers
         {
             var myTask = Task.Run(() => context.Tipus.ToList());
             List<Tipus> Tipus = await myTask;
+            Console.WriteLine("[SERVER] Query 'Tipus' executed correctly");
             return Tipus;
         }
 
@@ -69,6 +75,7 @@ namespace Controllers
         {
             var myTask = Task.Run(() => context.Equips.ToList());
             List<Equip> equips = await myTask;
+            Console.WriteLine("[SERVER] Query 'Equips' executed correctly");
             return equips;
         }
         
@@ -78,6 +85,7 @@ namespace Controllers
         {
             var myTask = Task.Run(() => context.Jugadors.Where(j => j.nom_jugador.Equals(player.nom_jugador) && j.contrasenya_jugador.Equals(player.contrasenya_jugador)).ToList());
             List<Jugador> players = await myTask;
+            Console.WriteLine("[SERVER] Query 'LogIn' executed correctly");
             return (players.Count<Jugador>() != 0);
         }
 
@@ -109,7 +117,6 @@ namespace Controllers
                // return response;
                 
             //}
-
         }
     }
 }

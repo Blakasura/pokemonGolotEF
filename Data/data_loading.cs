@@ -143,7 +143,7 @@ namespace Data
                     if (lastPokemon != pokemonAAfegir.nom_pokemon)
                     {
                         pokemons.Add(pokemonAAfegir);
-                        Console.WriteLine("Pokemon: " + pokemonAAfegir.nom_pokemon + ", Id: " + pokemonAAfegir.id_pokemon + ", Atac: " + pokemonAAfegir.atac_pokemon + ", Raresa: " + pokemonAAfegir.rarity);
+                        // Console.WriteLine("Pokemon: " + pokemonAAfegir.nom_pokemon + ", Id: " + pokemonAAfegir.id_pokemon + ", Atac: " + pokemonAAfegir.atac_pokemon + ", Raresa: " + pokemonAAfegir.rarity);
                     }
                     else
                     {
@@ -178,7 +178,7 @@ namespace Data
                     tipusAAfegir = new Tipus();
                     tipusAAfegir.id_tipus = ind;
                     tipusAAfegir.nom_tipus = result.name;
-                    Console.WriteLine("Tipus id: " + tipusAAfegir.id_tipus + ", Nom tipus: " + tipusAAfegir.nom_tipus);
+                    // Console.WriteLine("Tipus id: " + tipusAAfegir.id_tipus + ", Nom tipus: " + tipusAAfegir.nom_tipus);
                     tipus.Add(tipusAAfegir);
                     ind++;
                 }
@@ -237,7 +237,7 @@ namespace Data
                 moviment.delta_energia_pokemon_moviment = move.energy_delta;
                 moviment.tipus_id = tipus.Find(t => t.nom_tipus == move.type.ToLower()).id_tipus;
                 moviments.Add(moviment);
-                Console.WriteLine("Moviment id: " + moviment.id_moviment + ", Nom moviment: " + moviment.nom_moviment + ", Tipus: " + moviment.tipus_id);
+                // Console.WriteLine("Moviment id: " + moviment.id_moviment + ", Nom moviment: " + moviment.nom_moviment + ", Tipus: " + moviment.tipus_id);
                 ind++;
             }
 
@@ -288,7 +288,7 @@ namespace Data
                         PmAAfegir.moviment_id = moviments.Find(m => m.nom_moviment == moviment).id_moviment;
                         PmAAfegir.pokemon_id = current.pokemon_id;
                         possibles_moviments.Add(PmAAfegir);
-                        Console.WriteLine("Pokemon: " + PmAAfegir.pokemon_id + ", Moviment: " + PmAAfegir.moviment_id);
+                        // Console.WriteLine("Pokemon: " + PmAAfegir.pokemon_id + ", Moviment: " + PmAAfegir.moviment_id);
                         lastInd = PmAAfegir.pokemon_id;
                     }
 
@@ -339,7 +339,7 @@ namespace Data
                         PtAAfegir.tipus_id = tipus.Find(t => t.nom_tipus.ToLower() == tp.ToLower()).id_tipus;
                         pokemons_tipus.Add(PtAAfegir);
 
-                        Console.WriteLine("Pokemon id: " + PtAAfegir.pokemon_id + ", Tipus id: " + PtAAfegir.tipus_id);
+                        // Console.WriteLine("Pokemon id: " + PtAAfegir.pokemon_id + ", Tipus id: " + PtAAfegir.tipus_id);
                     }
                     lastInd = pokemon_type.pokemon_id;
                 }
@@ -381,7 +381,7 @@ namespace Data
                         evolucioAAfegir.id_pokemon_evolucio = pokemons.Find(p => p.id_pokemon == evo.pokemon_id).id_pokemon;
                         evolucioAAfegir.caramels_necessaris = evo.candy_required;
                         evolucions.Add(evolucioAAfegir);
-                        Console.WriteLine("Pokemon id: " + evolucioAAfegir.id_pokemon + ", Evolucio id: " + evolucioAAfegir.id_pokemon_evolucio);
+                        // Console.WriteLine("Pokemon id: " + evolucioAAfegir.id_pokemon + ", Evolucio id: " + evolucioAAfegir.id_pokemon_evolucio);
                         lastEvo = evo.pokemon_id;
                     }
                     lastPok = pokemon_evolucio.pokemon_id; 
