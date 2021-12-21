@@ -24,7 +24,6 @@ namespace Controllers
         {
             var myTask = Task.Run(() => context.Pokemons.OrderBy(p => p.id_pokemon).ToList());
             List<Pokemon> pokemons = await myTask;
-            Console.WriteLine("PROVA");
             return pokemons;
         }
 
@@ -86,8 +85,9 @@ namespace Controllers
         [Route("addPlayer")]
         public HttpResponseMessage addPlayer([FromBody] Jugador newPlayer)
         {
-            //if (context.Jugadors.First(j => j.email_jugador == newPlayer.email_jugador) == null) 
-            //{ 
+            var myTask = Task.Run(() => context.Jugadors.Where(j => j.nom_jugador.Equals(player.email_jugador)).ToList());
+            if (players.Count<Jugador>() == 0) 
+            { 
                 const int maxItems = 350;
                 const int maxPokemon = 300;
                 const int initialLevel = 1;
@@ -103,13 +103,14 @@ namespace Controllers
                 context.SaveChangesAsync();
                 return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
 
-          //  } else { 
+            } else { 
 
-               // var response = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
-               // response.Content = new StringContent("Aquest correu electrònic s'està fent servir per un altre compte");
-               // return response;
+               var response = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
+               response.Content = new StringContent("Aquest correu electrònic s'està fent servir per un altre compte");
+               Console.WriteLine("Compte ja creat!");
+               return response;
                 
-            //}
+            }
 
         }
     }
