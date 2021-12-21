@@ -19,9 +19,15 @@ namespace Data
         // Cryptography VAR
         static RSACryptoServiceProvider rsa;
         static CspParameters cspp = new CspParameters();
-        const string connStringFile = @".\Connection\\connString.enc";
-        const string keysFile = @".\Connection\\rsaKeys.txt";
-        const string fileDecrypted = @".\Connection\\decryptedString.txt";
+        //const string connStringFile = @".\Connection\\connString.enc";
+        //const string keysFile = @".\Connection\\rsaKeys.txt";
+        //const string fileDecrypted = @".\Connection\\decryptedString.txt";
+
+	// Server credentials
+	const string connStringFile = @"./Connection/connString.enc";
+	const string keysFile = @"./Connection/rsaKeys.txt";
+	const string fileDecrypted = @"./Connection/decryptedString.txt";
+
 
         // Import all the tables from Models
 
@@ -288,8 +294,9 @@ namespace Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(decryptStringConn());
-            System.IO.File.Delete(fileDecrypted);
+
+            optionsBuilder.UseNpgsql("Host=localhost; Port=5432; Database=pokemonGolot; Username=postgres; Password=postgres");
+            //System.IO.File.Delete(fileDecrypted);
         }
 
 
