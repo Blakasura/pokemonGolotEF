@@ -200,7 +200,7 @@ namespace Data
         {
 
             optionsBuilder.UseNpgsql(decryptStringConn());
-            System.IO.File.Delete(fileDecrypted);
+            //System.IO.File.Delete(fileDecrypted);
         }
 
         public string decryptStringConn()
