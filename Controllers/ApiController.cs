@@ -88,6 +88,16 @@ namespace Controllers
                 newPlayer.nivell_jugador = initialLevel;
                 newPlayer.maxim_objectes_jugador = maxItems;
                 newPlayer.maxim_pokemons_jugador = maxPokemon;
+                newPlayer.equip = null;
+                newPlayer.te_ou = null;
+                newPlayer.gimnasos = null;
+                newPlayer.te_regal = null;
+                newPlayer.rep_regal = null;
+                newPlayer.te_missio = null;
+                newPlayer.fa_amistats = null;
+                newPlayer.te_amistats = null;
+                newPlayer.te_objectes = null;
+                newPlayer.registrat_pokemon = null;
 
                 context.Jugadors.Add(newPlayer);
                 context.SaveChangesAsync();
