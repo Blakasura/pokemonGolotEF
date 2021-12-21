@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using ApiModel;
-
 using Microsoft.EntityFrameworkCore.Design;
 using Model;
 using Newtonsoft.Json;

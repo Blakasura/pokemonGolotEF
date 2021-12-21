@@ -90,6 +90,13 @@ namespace Controllers
         }
 
         [HttpPost]
+        [Route("Login")]
+        public async Task<String> Login([FromBody] Jugador jugador)
+        { 
+            
+        }
+
+        [HttpPost]
         [Route("addPlayer")]
         public HttpResponseMessage addPlayer([FromBody] Jugador newPlayer)
         {

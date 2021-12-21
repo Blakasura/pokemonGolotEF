@@ -87,6 +87,7 @@ namespace Model
         public double nivell_jugador { get; set; }
         public int maxim_objectes_jugador { get; set; }  
         public int maxim_pokemons_jugador { get; set; }
+        // public string active_token { get; set;}
 
         // Navigations
         public Equip? equip { get; set; }
@@ -255,6 +256,7 @@ namespace Model
         public virtual ICollection<Pokemon_Moviment>? te_moviments { get; set;}
 
     }
+
     public class Ou_Jugador
     {
         // PK - FK
@@ -269,6 +271,7 @@ namespace Model
         public Ou? ou { get; set; }
         
     }
+
     public class Jugador_Pokemon_Gimnas
     {
         // PK - FK
@@ -375,4 +378,5 @@ namespace Model
         public Pokemon? pokemon { get; set; }
         public Moviment? moviment { get; set; }
     }
+
 }
