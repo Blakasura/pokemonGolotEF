@@ -100,7 +100,7 @@ namespace Controllers
                // response.Content = new StringContent("Aquest correu electrònic s'està fent servir per un altre compte");
                // return response;
                 
-            }
+            //}
 
         }
     }
