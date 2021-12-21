@@ -85,7 +85,8 @@ namespace Controllers
         [Route("addPlayer")]
         public HttpResponseMessage addPlayer([FromBody] Jugador newPlayer)
         {
-            var myTask = Task.Run(() => context.Jugadors.Where(j => j.nom_jugador.Equals(player.email_jugador)).ToList());
+            var myTask = Task.Run(() => context.Jugadors.Where(j => j.nom_jugador.Equals(newPlayer.email_jugador)).ToList());
+            List<Jugador> players = await myTask;
             if (players.Count<Jugador>() == 0) 
             { 
                 const int maxItems = 350;
