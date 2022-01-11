@@ -89,12 +89,6 @@ namespace Controllers
             return (players.Count<Jugador>() != 0);
         }
 
-        [HttpPost]
-        [Route("Login")]
-        public async Task<String> Login([FromBody] Jugador jugador)
-        { 
-            
-        }
 
         [HttpPost]
         [Route("addPlayer")]
@@ -124,6 +118,24 @@ namespace Controllers
                // return response;
                 
             //}
+        }
+
+        public string Encrypt(string source, string key)
+        {
+            TripleDESCryptoServiceProvider desCryptoProvider = new TripleDESCryptoServiceProvider();
+            MD5CryptoServiceProvider hashMD5Provider = new MD5CryptoServiceProvider();
+ 
+            byte[] byteHash;
+            byte[] byteBuff;
+ 
+            byteHash = hashMD5Provider.ComputeHash(Encoding.UTF8.GetBytes(key));
+            desCryptoProvider.Key = byteHash;
+            desCryptoProvider.Mode = CipherMode.ECB; //CBC, CFB
+            byteBuff = Encoding.UTF8.GetBytes(source);
+ 
+            string encoded = 
+                Convert.ToBase64String(desCryptoProvider.CreateEncryptor().TransformFinalBlock(byteBuff, 0, byteBuff.Length));
+            return encoded;
         }
     }
 }

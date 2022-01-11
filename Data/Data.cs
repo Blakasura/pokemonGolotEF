@@ -295,7 +295,7 @@ namespace Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            optionsBuilder.UseNpgsql("Host=localhost; Port=5432; Database=pokemonGolot; Username=postgres; Password=postgres");
+            optionsBuilder.UseNpgsql(decryptStringConn());
             System.IO.File.Delete(fileDecrypted);
         }
 
