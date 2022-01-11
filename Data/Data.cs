@@ -17,8 +17,8 @@ namespace Data
     public class Database : DbContext
     {
         // Cryptography VAR
-        //static var rsa;
-        //static CspParameters cspp = new CspParameters();
+        static var rsa;
+        static CspParameters cspp = new CspParameters();
         //const string connStringFile = @".\Connection\\connString.enc";
         //const string keysFile = @".\Connection\\rsaKeys.txt";
         //const string fileDecrypted = @".\Connection\\decryptedString.txt";
