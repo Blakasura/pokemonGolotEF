@@ -17,8 +17,8 @@ namespace Data
     public class Database : DbContext
     {
         // Cryptography VAR
-        static RSACryptoServiceProvider rsa;
-        static CspParameters cspp = new CspParameters();
+        //static var rsa;
+        //static CspParameters cspp = new CspParameters();
         //const string connStringFile = @".\Connection\\connString.enc";
         //const string keysFile = @".\Connection\\rsaKeys.txt";
         //const string fileDecrypted = @".\Connection\\decryptedString.txt";
@@ -295,8 +295,8 @@ namespace Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            optionsBuilder.UseNpgsql(decryptStringConn());
-            System.IO.File.Delete(fileDecrypted);
+            optionsBuilder.UseNpgsql("Host=localhost; Port=5432; Database=pokemonGolot; Username=postgres; Password=postgres");
+            //System.IO.File.Delete(fileDecrypted);
         }
 
 
@@ -309,7 +309,7 @@ namespace Data
         public void importKeys() {
             StreamReader sr = new StreamReader(keysFile);
             string keytxt = sr.ReadToEnd();
-            rsa = new RSACryptoServiceProvider(cspp);
+            rsa = RSA.Create(cspp);
             rsa.FromXmlString(keytxt);
             rsa.PersistKeyInCsp = true;
             if (rsa.PublicOnly == true)
