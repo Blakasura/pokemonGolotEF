@@ -120,7 +120,7 @@ namespace Controllers
             //}
         }
 
-        public string Encrypt(string source, string key)
+        /*public string Encrypt(string source, string key)
         {
             TripleDESCryptoServiceProvider desCryptoProvider = new TripleDESCryptoServiceProvider();
             MD5CryptoServiceProvider hashMD5Provider = new MD5CryptoServiceProvider();
@@ -136,6 +136,6 @@ namespace Controllers
             string encoded = 
                 Convert.ToBase64String(desCryptoProvider.CreateEncryptor().TransformFinalBlock(byteBuff, 0, byteBuff.Length));
             return encoded;
-        }
+        }*/
     }
 }
