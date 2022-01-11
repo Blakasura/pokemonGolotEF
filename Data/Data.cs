@@ -17,7 +17,7 @@ namespace Data
     public class Database : DbContext
     {
         // Cryptography VAR
-        static var rsa;
+        static RSACryptoServiceProvider rsa;
         static CspParameters cspp = new CspParameters();
         //const string connStringFile = @".\Connection\\connString.enc";
         //const string keysFile = @".\Connection\\rsaKeys.txt";
@@ -309,7 +309,7 @@ namespace Data
         public void importKeys() {
             StreamReader sr = new StreamReader(keysFile);
             string keytxt = sr.ReadToEnd();
-            rsa = RSA.Create(cspp);
+            rsa = new RSACryptoServiceProvider(cspp);
             rsa.FromXmlString(keytxt);
             rsa.PersistKeyInCsp = true;
             if (rsa.PublicOnly == true)
