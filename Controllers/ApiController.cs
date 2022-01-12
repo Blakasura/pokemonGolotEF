@@ -36,6 +36,7 @@ namespace Controllers
         {
             var myTask = Task.Run(() => context.Pokedexs.Where(j => j.jugadorId.Equals("xavi")).OrderBy(p => p.pokemonId).ToList());
             List<Pokedex> pokedex = await myTask;
+
             Console.WriteLine("[SERVER] Query 'Pokedex' executed correctly");
             return pokedex;
 
