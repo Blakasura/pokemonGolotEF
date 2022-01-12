@@ -30,6 +30,17 @@ namespace Controllers
         }
 
         [HttpGet]
+        [Route("Pokedex")]
+        public async Task<List<Pokedex>> GetPokedex()
+        {
+            var myTask = Task.Run(() => context.Pokedex.OrderBy(p => p.pokemonId).Where(j => j.jugadorId.Equals("Xavi")).ToList());
+            List<Pokedex> pokedex = await myTask;
+            Console.WriteLine("[SERVER] Query 'Pokedex' executed correctly");
+            return pokedex;
+
+        }
+
+        [HttpGet]
         [Route("Moviments")]
         public async Task<List<Moviment>> GetMoviments()
         {
@@ -116,7 +127,7 @@ namespace Controllers
           //  } else { 
 
                // var response = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
-               // response.Content = new StringContent("Aquest correu electrònic s'està fent servir per un altre compte");
+               // response.Content = new StringContent("Aquest correu electrï¿½nic s'estï¿½ fent servir per un altre compte");
                // return response;
                 
             //}
