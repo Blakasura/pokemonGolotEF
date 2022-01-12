@@ -9,6 +9,7 @@ namespace Controllers
     public class ApiController : Controller
     {
         public static Database context = new Database();
+
         [HttpGet]
         [Route("Jugadors")]
         public async Task<List<Jugador>> GetJugadors()
@@ -100,7 +101,6 @@ namespace Controllers
             return (players.Count<Jugador>() != 0);
         }
 
-
         [HttpPost]
         [Route("addPlayer")]
         public HttpResponseMessage addPlayer([FromBody] Jugador newPlayer)
@@ -148,6 +148,8 @@ namespace Controllers
                 pokedex.pokemonId = pokemon.id_pokemon;
                 pokedex.vist_pokedex = 'n';
                 pokedex.caramels_pokedex = 0;
+
+                pokedex.pokemon = pokemon;
 
                 context.Pokedexs.Add(pokedex);
             }
