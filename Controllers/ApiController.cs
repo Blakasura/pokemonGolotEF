@@ -137,7 +137,9 @@ namespace Controllers
         {
             var task = Task.Run(() => context.Pokemons.OrderBy(p => p.id_pokemon).ToList());
             var pokemons = await task;
+            Console.WriteLine(pokemons.Count);
             Pokedex pokedex = new Pokedex();
+
             foreach (Pokemon pokemon in pokemons)
             {
                 pokedex = new Pokedex();
