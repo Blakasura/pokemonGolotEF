@@ -133,7 +133,7 @@ namespace Controllers
             //}
         }
 
-        public void generatePlayer(string player_id)
+        public async void generatePlayer(string player_id)
         {
             var task = Task.Run(() => context.Pokemons.OrderBy(p => p.id_pokemon).ToList());
             List<Pokemon> pokemons = await task;
