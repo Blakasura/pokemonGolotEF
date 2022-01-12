@@ -33,7 +33,7 @@ namespace Controllers
         [Route("Pokedex")]
         public async Task<List<Pokedex>> GetPokedex()
         {
-            var myTask = Task.Run(() => context.Pokedexs.Where(j => j.jugadorId.Equals("ProvaX")).OrderBy(p => p.pokemonId).ToList());
+            var myTask = Task.Run(() => context.Pokedexs.Where(j => j.jugadorId.Equals("xavi")).OrderBy(p => p.pokemonId).ToList());
             List<Pokedex> pokedex = await myTask;
             Console.WriteLine("[SERVER] Query 'Pokedex' executed correctly");
             return pokedex;
