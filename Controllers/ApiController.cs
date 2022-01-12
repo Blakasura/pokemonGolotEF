@@ -133,7 +133,7 @@ namespace Controllers
             //}
         }
 
-        public async Task<Boolean> generatePlayer(string player_id)
+        public void generatePlayer(string player_id)
         {
             var task = Task.Run(() => context.Pokemons.OrderBy(p => p.id_pokemon).ToList());
             List<Pokemon> pokemons = await task;
@@ -155,7 +155,6 @@ namespace Controllers
 
             context.SaveChanges();
             Console.WriteLine("[SERVER] Task 'addPlayer' executed correctly");
-            return true;
         }
 
         /*public string Encrypt(string source, string key)
