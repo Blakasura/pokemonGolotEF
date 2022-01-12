@@ -143,10 +143,11 @@ namespace Controllers
             {
                 pokedex = new Pokedex();
 
-                pokedex.jugador_id = player_id;
-                pokedex.pokemon_id = pokemon.id_pokemon;
+                pokedex.jugadorId = player_id;
+                pokedex.pokemonId = pokemon.id_pokemon;
                 pokedex.vist_pokedex = "n";
                 pokedex.caramels_pokedex = 0;
+
 
                 pokedex_jugador.Add(pokedex);
                 Console.WriteLine(pokedex.jugador_id);
