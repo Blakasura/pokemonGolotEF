@@ -10,8 +10,6 @@ namespace ApiModel
     public class pokedex_api
     {
         public int id_pokemon { get; set; }
-        public string nom_pokemon { get; set; }
-        public string rarity { get; set; }
         public char status { get; set; }
     }
 }
