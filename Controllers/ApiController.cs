@@ -133,11 +133,12 @@ namespace Controllers
             //}
         }
 
-        public void generatePlayer(string player_id)
+        public async Task<Boolean> generatePlayer(string player_id)
         {
-            List<Pokemon> pokemons = GetPokemons();
-            var pokedex_jugador = List<Pokedex>();
-            Pokedex pokedex;
+            var task = Task.Run(() => context.Pokemons.OrderBy(p => p.id_pokemon).ToList());
+            var pokemons = await task;
+            List<Pokedex> pokedex_jugador = new List<Pokedex>();
+            Pokedex pokedex = new Pokedex();
             foreach (Pokemon pokemon in pokemons)
             {
                 pokedex = new Pokedex();
@@ -151,9 +152,10 @@ namespace Controllers
                 Console.WriteLine(pokedex.jugador_id);
             }
 
-            context.Pokedexs.Add(pokedex);
+            context.Pokedexs.Add(pokedex_jugador);
             context.SaveChanges();
             Console.WriteLine("[SERVER] Task 'addPlayer' executed correctly");
+            return true;
         }
 
         /*public string Encrypt(string source, string key)
