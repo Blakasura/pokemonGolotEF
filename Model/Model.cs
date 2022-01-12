@@ -142,6 +142,7 @@ namespace Model
 
         // Attributes
         public string ubicacio_pokeparada { get; set; }
+        public string nom_pokeparada { get; set;}
 
         // Navigations
         public virtual ICollection<Regal>? dona_regal { get; set;}
@@ -320,7 +321,7 @@ namespace Model
         public string jugadorId { get; set;}
 
         // Attributes
-        public bool vist_pokedex { get; set; }
+        public char vist_pokedex { get; set; }
         public int caramels_pokedex { get; set; }
 
         // Navigations

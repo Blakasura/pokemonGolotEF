@@ -109,6 +109,8 @@ namespace Controllers
 
                 context.Jugadors.Add(newPlayer);
                 context.SaveChangesAsync();
+                Console.WriteLine("[SERVER] Query 'addPlayer' executed correctly");
+                generatePlayer(newPlayer.nom_jugador);
                 return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
 
           //  } else { 
@@ -118,6 +120,29 @@ namespace Controllers
                // return response;
                 
             //}
+        }
+
+        public void generatePlayer(string player_id)
+        {
+            var pokemons = GetPokemons();
+            var pokedex_jugador = List<Pokedex>();
+            var pokedex;
+            foreach (Pokemon pokemon in pokemons)
+            {
+                pokedex = new Pokedex();
+
+                pokedex.jugador_id = player_id;
+                pokedex.pokemon_id = pokemon.id_pokemon;
+                pokedex.vist_pokedex = "n";
+                pokedex.caramels_pokedex = 0;
+
+                pokedex_jugador.Add(pokedex);
+                Console.WriteLine(pokedex.jugador_id);
+            }
+
+            context.Pokedexs.Add(pokedex);
+            context.SaveChanges();
+            Console.WriteLine("[SERVER] Task 'addPlayer' executed correctly");
         }
 
         /*public string Encrypt(string source, string key)
