@@ -124,9 +124,9 @@ namespace Controllers
 
         public void generatePlayer(string player_id)
         {
-            var pokemons = GetPokemons();
+            List<Pokemon> pokemons = GetPokemons();
             var pokedex_jugador = List<Pokedex>();
-            var pokedex;
+            Pokedex pokedex;
             foreach (Pokemon pokemon in pokemons)
             {
                 pokedex = new Pokedex();
