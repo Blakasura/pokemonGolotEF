@@ -145,7 +145,7 @@ namespace Controllers
 
                 pokedex.jugadorId = player_id;
                 pokedex.pokemonId = pokemon.id_pokemon;
-                pokedex.vist_pokedex = "n";
+                pokedex.vist_pokedex = 'n';
                 pokedex.caramels_pokedex = 0;
 
 
