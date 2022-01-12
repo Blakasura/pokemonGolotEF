@@ -150,7 +150,7 @@ namespace Controllers
 
 
                 pokedex_jugador.Add(pokedex);
-                Console.WriteLine(pokedex.jugador_id);
+                Console.WriteLine(pokedex.jugadorId);
             }
 
             context.Pokedexs.Add(pokedex_jugador);
