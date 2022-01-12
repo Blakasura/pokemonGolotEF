@@ -137,7 +137,6 @@ namespace Controllers
         {
             var task = Task.Run(() => context.Pokemons.OrderBy(p => p.id_pokemon).ToList());
             var pokemons = await task;
-            List<Pokedex> pokedex_jugador = new List<Pokedex>();
             Pokedex pokedex = new Pokedex();
             foreach (Pokemon pokemon in pokemons)
             {
@@ -148,12 +147,10 @@ namespace Controllers
                 pokedex.vist_pokedex = 'n';
                 pokedex.caramels_pokedex = 0;
 
-
-                pokedex_jugador.Add(pokedex);
+                context.Pokedexs.Add(pokedex);
                 Console.WriteLine(pokedex.jugadorId);
             }
 
-            context.Pokedexs.Add(pokedex_jugador);
             context.SaveChanges();
             Console.WriteLine("[SERVER] Task 'addPlayer' executed correctly");
             return true;
