@@ -149,8 +149,6 @@ namespace Controllers
                 pokedex.vist_pokedex = 'n';
                 pokedex.caramels_pokedex = 0;
 
-                pokedex.pokemon = pokemon;
-
                 context.Pokedexs.Add(pokedex);
             }
 
