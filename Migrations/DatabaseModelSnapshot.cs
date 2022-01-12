@@ -3387,8 +3387,8 @@ namespace pokemonGolotEF.Migrations
                     b.Property<int>("caramels_pokedex")
                         .HasColumnType("integer");
 
-                    b.Property<char>("vist_pokedex")
-                        .HasColumnType("character(1)");
+                    b.Property<bool>("vist_pokedex")
+                        .HasColumnType("boolean");
 
                     b.HasKey("pokemonId", "jugadorId");
 

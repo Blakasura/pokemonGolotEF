@@ -121,7 +121,7 @@ namespace Controllers
                 context.Jugadors.Add(newPlayer);
                 context.SaveChangesAsync();
                 Console.WriteLine("[SERVER] Query 'addPlayer' executed correctly");
-                generatePlayer(newPlayer.nom_jugador);
+                //generatePlayer(newPlayer.nom_jugador);
                 return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
 
           //  } else { 
@@ -133,7 +133,7 @@ namespace Controllers
             //}
         }
 
-        public async void generatePlayer(string player_id)
+        /*public async void generatePlayer(string player_id)
         {
             var task = Task.Run(() => context.Pokemons.OrderBy(p => p.id_pokemon).ToList());
             List<Pokemon> pokemons = await task;
@@ -154,7 +154,7 @@ namespace Controllers
 
             context.SaveChanges();
             Console.WriteLine("[SERVER] Task 'generatePlayer' executed correctly");
-        }
+        }*/
 
         /*public string Encrypt(string source, string key)
         {

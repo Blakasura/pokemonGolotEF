@@ -5,7 +5,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace pokemonGolotEF.Migrations
 {
-    public partial class Databasebulk : Migration
+    public partial class databasebulk : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -437,7 +437,7 @@ namespace pokemonGolotEF.Migrations
                 {
                     pokemonId = table.Column<int>(type: "integer", nullable: false),
                     jugadorId = table.Column<string>(type: "text", nullable: false),
-                    vist_pokedex = table.Column<char>(type: "character(1)", nullable: false),
+                    vist_pokedex = table.Column<bool>(type: "boolean", nullable: false),
                     caramels_pokedex = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>

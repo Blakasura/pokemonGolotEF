@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace pokemonGolotEF.Migrations
 {
     [DbContext(typeof(Database))]
-    [Migration("20220111184809_Database bulk")]
-    partial class Databasebulk
+    [Migration("20220112194529_database bulk")]
+    partial class databasebulk
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -3389,8 +3389,8 @@ namespace pokemonGolotEF.Migrations
                     b.Property<int>("caramels_pokedex")
                         .HasColumnType("integer");
 
-                    b.Property<char>("vist_pokedex")
-                        .HasColumnType("character(1)");
+                    b.Property<bool>("vist_pokedex")
+                        .HasColumnType("boolean");
 
                     b.HasKey("pokemonId", "jugadorId");
 
