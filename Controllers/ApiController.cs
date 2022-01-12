@@ -150,11 +150,10 @@ namespace Controllers
                 pokedex.caramels_pokedex = 0;
 
                 context.Pokedexs.Add(pokedex);
-                Console.WriteLine(pokedex.jugadorId);
             }
 
             context.SaveChanges();
-            Console.WriteLine("[SERVER] Task 'addPlayer' executed correctly");
+            Console.WriteLine("[SERVER] Task 'generatePlayer' executed correctly");
         }
 
         /*public string Encrypt(string source, string key)
