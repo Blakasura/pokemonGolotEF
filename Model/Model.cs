@@ -321,7 +321,7 @@ namespace Model
         public string jugadorId { get; set;}
 
         // Attributes
-        public char vist_pokedex { get; set; }
+        public bool vist_pokedex { get; set; }
         public int caramels_pokedex { get; set; }
 
         // Navigations
