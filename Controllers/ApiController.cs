@@ -152,7 +152,6 @@ namespace Controllers
                 pokedex_pokemon = new pokedex_pokemon();
                 id_tipus_finals = new List<int>();
                 tipus_de_pokemons = new List<Pokemon_Tipus>();
-                tipus_a_afegir = new Tipus();
                 nom_tipus_finals = new List<string>();
 
                 pokedex_pokemon.id_pokemon = pokemon.id_pokemon;
@@ -172,6 +171,8 @@ namespace Controllers
                 }
 
                 pokedex_pokemon.tipus = nom_tipus_finals;
+                pokedex_pokemon.vist_per_jugador = pokedex.Find(pk => pk.pokemonId == pokemon.id_pokemon).vist_pokedex;
+                pokedex_pokemon.caramels = pokedex.Find(pk => pk.pokemonId == pokemon.id_pokemon).caramels_pokedex;
 
                 pokedex_pokemons.Add(pokedex_pokemon);
 
