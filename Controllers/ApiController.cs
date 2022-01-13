@@ -103,6 +103,27 @@ namespace Controllers
         }
 
         [HttpGet]
+        [Route("Pokeparades")]
+        public async Task<List<Jugador>> GetPokeparades()
+        {
+            var myTask = Task.Run(() => context.Pokeparades.ToList());
+            List<Pokeparada> pokeparades = await myTask;
+            Console.WriteLine("[SERVER] Query 'Pokeparades' executed correctly");
+            return pokeparades;
+        }
+
+        [HttpPost]
+        [Route("Pokeparada")]
+        public HttpResponseMessage addPokeparada([FromBody] Pokeparada newPokeparada)
+        {
+                newPokeparada.id_pokeparada = context.Pokeparades.Count() + 1;
+
+                context.Pokeparades.Add(newPokeparada);
+                context.SaveChangesAsync();
+                return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+        }
+
+        [HttpGet]
         [Route("Pokedex")]
         public async Task<Boolean> GetPokedex()
         { 
