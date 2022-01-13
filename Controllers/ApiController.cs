@@ -125,7 +125,7 @@ namespace Controllers
 
         [HttpGet]
         [Route("Pokedex")]
-        public async Task<Boolean> GetPokedex()
+        public async Task<List<pokedex_pokemon>> GetPokedex()
         { 
             var getPokemons = Task.Run(() => context.Pokemons.OrderBy(p => p.id_pokemon).ToList());
             List<Pokemon> pokemons = await getPokemons;
@@ -148,8 +148,10 @@ namespace Controllers
                 pokedex_pokemon.nom_pokemon = pokemon.nom_pokemon;
                 pokedex_pokemon.rarity = pokemon.rarity;
 
-                
-            
+                pokedex_pokemon.tipus = pokemons_tipus.Find(pt => pt.pokemon_id == pokemon.id_pokemon).tipus;
+
+                pokedex_pokemons.Add(pokedex_pokemon);
+
             }
 
             //public int id_pokemon { get; set; }
@@ -159,7 +161,7 @@ namespace Controllers
             //public bool vist_per_jugador { get; set; }
             //public int caramels { get; set; }
 
-            return true;
+            return pokedex_pokemons;
          
         }
 
