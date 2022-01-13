@@ -171,8 +171,8 @@ namespace Controllers
                 }
 
                 pokedex_pokemon.tipus = nom_tipus_finals;
-                pokedex_pokemon.vist_per_jugador = pokedex.Find(pk => pk.pokemonId == pokemon.id_pokemon);
-                pokedex_pokemon.caramels = pokedex.Find(pk => pk.pokemonId == pokemon.id_pokemon);
+                pokedex_pokemon.vist_per_jugador = pokedex.Find(pk => pk.pokemonId == pokemon.id_pokemon).vist_pokedex;
+                pokedex_pokemon.caramels = pokedex.Find(pk => pk.pokemonId == pokemon.id_pokemon).caramels_pokedex;
 
                 pokedex_pokemons.Add(pokedex_pokemon);
 
