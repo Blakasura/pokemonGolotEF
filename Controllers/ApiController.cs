@@ -116,7 +116,7 @@ namespace Controllers
             List<Tipus> tipus = await getTipus;
 
             var getPokemonTipus = Task.Run(() => context.Tipus.ToList());
-            List<Pokemon_Tipus> = await getPokemonTipus;
+            List<Pokemon_Tipus> pokemons_tipus = await getPokemonTipus;
 
             List<pokedex_pokemon> prova = new List<pokedex_pokemon>();  
          
