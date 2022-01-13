@@ -135,7 +135,7 @@ namespace Controllers
 
             var getTipus = Task.Run(() => context.Tipus.ToList());
             List<Tipus> tipus = await getTipus;
-            List<Tipus> tipus_finals;
+            List<int> id_tipus_finals;
             Tipus tipus_a_afegir;
 
             var getPokemonTipus = Task.Run(() => context.Pokemon_Tipus.ToList());
@@ -150,7 +150,7 @@ namespace Controllers
 
             foreach (Pokemon pokemon in pokemons) {
                 pokedex_pokemon = new pokedex_pokemon();
-                tipus_finals = new List<Tipus>();
+                id_tipus_finals = new List<int>();
                 tipus_de_pokemons = new List<Pokemon_Tipus>();
                 tipus_a_afegir = new Tipus();
 
@@ -162,12 +162,12 @@ namespace Controllers
 
                 foreach(Pokemon_Tipus pk in tipus_de_pokemons)
                 { 
-                    tipus_finals.Add(tipus.Find(tp => tp.id_tipus == pk.tipus_id));
+                    id_tipus_finals.Add(pk.tipus_id);
                 }
 
-                foreach (Tipus i in tipus_finals)
+                foreach (int i in id_tipus_finals)
                 {
-                    tipus_de_pokemons.Add(tipus.Find(tp => tp.id_tipus == i.id_tipus).nom_tipus);
+                    tipus_de_pokemons.Add(tipus.Find(tp => tp.id_tipus == i).nom_tipus);
                 }
 
                 pokedex_pokemon.tipus = tipus_de_pokemons;
