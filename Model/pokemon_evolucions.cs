@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace pokemonGolot.Model
+namespace Model
 {
     public class Evolution
     {
