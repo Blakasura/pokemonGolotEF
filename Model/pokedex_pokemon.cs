@@ -14,7 +14,7 @@ namespace Model
         public string nom_pokemon { get; set; }
         public string rarity { get; set; }
         public List<string> tipus { get; set; }
-        public bool vist_per_jugador { get; set; }
+        public char vist_per_jugador { get; set; }
         public int caramels { get; set; }
 
     }
