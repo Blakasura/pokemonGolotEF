@@ -167,10 +167,10 @@ namespace Controllers
 
                 foreach (Tipus i in tipus_finals)
                 {
-                    tipusAAfegir.Add(tipus.Find(tp => tp.id_tipus == i.id_tipus).nom_tipus);
+                    tipus_de_pokemons.Add(tipus.Find(tp => tp.id_tipus == i.id_tipus).nom_tipus);
                 }
 
-                pokedex_pokemon.tipus = tipus_a_afegir;
+                pokedex_pokemon.tipus = tipus_de_pokemons;
 
                 pokedex_pokemons.Add(pokedex_pokemon);
 
