@@ -102,7 +102,7 @@ namespace Controllers
             return (players.Count<Jugador>() != 0);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("Pokedex")]
         public async Task<Boolean> GetPokedex()
         { 
