@@ -30,7 +30,7 @@ namespace Controllers
             return pokemons;
         }
 
-        [HttpGet]
+        /*[HttpGet]
         [Route("Pokedex")]
         public async Task<List<Pokedex>> GetPokedex()
         {
@@ -40,7 +40,7 @@ namespace Controllers
             Console.WriteLine("[SERVER] Query 'Pokedex' executed correctly");
             return pokedex;
 
-        }
+        }*/
 
         [HttpGet]
         [Route("Moviments")]
@@ -103,6 +103,26 @@ namespace Controllers
         }
 
         [HttpPost]
+        [Route("Pokedex")]
+        public async Task<Boolean> GetPokedex()
+        { 
+            var getPokemons = Task.Run(() => context.Pokemons.OrderBy(p => p.id_pokemon).ToList());
+            List<Pokemon> pokemons = await getPokemons;
+
+            var getPokedex = Task.Run(() => context.Pokedexs.Where(j => j.jugadorId.Equals("xavi")).OrderBy(p => p.pokemonId).ToList());
+            List<Pokedex> pokedex = await getPokedex;
+
+            var getTipus = Task.Run(() => context.Tipus.ToList());
+            List<Tipus> tipus = await getTipus;
+
+            var getPokemonTipus = Task.Run(() => context.Tipus.ToList());
+            List<Pokemon_Tipus> = await getPokemonTipus;
+
+            List<pokedex_pokemon> prova = new List<pokedex_pokemon>();  
+         
+        }
+
+        [HttpPost]
         [Route("addPlayer")]
         public HttpResponseMessage addPlayer([FromBody] Jugador newPlayer)
         {
@@ -153,7 +173,7 @@ namespace Controllers
                 context.Pokedexs.Add(pokedex);
             }
 
-            context.SaveChanges();
+            context.SaveChanges();d
             Console.WriteLine("[SERVER] Task 'generatePlayer' executed correctly");
         }*/
 
