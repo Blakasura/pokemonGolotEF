@@ -175,11 +175,12 @@ namespace Controllers
                 { 
                     pokedex_pokemon.vist_per_jugador = pokedex.Find(pk => pk.pokemonId == pokemon.id_pokemon).vist_pokedex;
                     pokedex_pokemon.caramels = pokedex.Find(pk => pk.pokemonId == pokemon.id_pokemon).caramels_pokedex;
+                    Console.WriteLine(pokedex.Find(pk => pk.pokemonId == pokemon.id_pokemon).vist_pokedex);
                 }
                 catch (Exception e) { 
                     pokedex_pokemon.vist_per_jugador = false;
                     pokedex_pokemon.caramels = 0;
-                    Console.WriteLine(pokedex.Find(pk => pk.pokemonId == pokemon.id_pokemon).vist_pokedex);
+
                 }
 
                 pokedex_pokemon.vist_per_jugador = pokedex.Find(pk => pk.pokemonId == pokemon.id_pokemon).vist_pokedex;
