@@ -146,7 +146,7 @@ namespace Controllers
             foreach (Pokemon pokemon in pokemons) {
                 pokedex_pokemon = new pokedex_pokemon();
                 tipusAAfegir = new List<String>();
-                tipus_ids = new List<int>;
+                tipus_ids = new List<int>();
 
                 pokedex_pokemon.id_pokemon = pokemon.id_pokemon;
                 pokedex_pokemon.nom_pokemon = pokemon.nom_pokemon;
