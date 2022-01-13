@@ -118,7 +118,25 @@ namespace Controllers
             var getPokemonTipus = Task.Run(() => context.Pokemon_Tipus.ToList());
             List<Pokemon_Tipus> pokemons_tipus = await getPokemonTipus;
 
-            List<pokedex_pokemon> prova = new List<pokedex_pokemon>();  
+            List<pokedex_pokemon> pokedex_pokemons = new List<pokedex_pokemon>();  
+            pokedex_pokemon pokedex_pokemon = new pokedex_pokemon();
+
+            foreach (Pokemon pokemon in pokemons) {
+                pokedex_pokemon = new pokedex_pokemon();
+                pokedex_pokemon.id_pokemon = pokemon.id_pokemon;
+                pokedex_pokemon.nom_pokemon = pokemon.nom_pokemon;
+                pokedex_pokemon.rarity = pokemon.rarity;
+
+                
+            
+            }
+
+            //public int id_pokemon { get; set; }
+            //public string nom_pokemon { get; set; }
+            //public string rarity { get; set; }
+            //public List<string> tipus { get; set; }
+            //public bool vist_per_jugador { get; set; }
+            //public int caramels { get; set; }
 
             return true;
          
