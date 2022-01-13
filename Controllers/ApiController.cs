@@ -147,7 +147,6 @@ namespace Controllers
             pokedex_pokemon pokedex_pokemon = new pokedex_pokemon();
 
 
-
             foreach (Pokemon pokemon in pokemons) {
                 pokedex_pokemon = new pokedex_pokemon();
                 id_tipus_finals = new List<int>();
@@ -171,6 +170,18 @@ namespace Controllers
                 }
 
                 pokedex_pokemon.tipus = nom_tipus_finals;
+
+                try
+                { 
+                    pokedex_pokemon.vist_per_jugador = pokedex.Find(pk => pk.pokemonId == pokemon.id_pokemon).vist_pokedex;
+                    pokedex_pokemon.caramels = pokedex.Find(pk => pk.pokemonId == pokemon.id_pokemon).caramels_pokedex;
+                }
+                catch (Exception e) { 
+                    pokedex_pokemon.vist_per_jugador = false;
+                    pokedex_pokemon.caramels = 0;
+                    Console.WriteLine(pokedex.Find(pk => pk.pokemonId == pokemon.id_pokemon).vist_pokedex);
+                }
+
                 pokedex_pokemon.vist_per_jugador = pokedex.Find(pk => pk.pokemonId == pokemon.id_pokemon).vist_pokedex;
                 pokedex_pokemon.caramels = pokedex.Find(pk => pk.pokemonId == pokemon.id_pokemon).caramels_pokedex;
 
