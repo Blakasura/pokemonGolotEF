@@ -135,7 +135,7 @@ namespace Controllers
 
             var getTipus = Task.Run(() => context.Tipus.ToList());
             List<Tipus> tipus = await getTipus;
-            List<Tipus> tipusAAfegir;
+            List<String> tipusAAfegir;
 
             var getPokemonTipus = Task.Run(() => context.Pokemon_Tipus.ToList());
             List<Pokemon_Tipus> pokemons_tipus = await getPokemonTipus;
