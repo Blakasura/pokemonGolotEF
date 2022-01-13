@@ -119,6 +119,8 @@ namespace Controllers
             List<Pokemon_Tipus> pokemons_tipus = await getPokemonTipus;
 
             List<pokedex_pokemon> prova = new List<pokedex_pokemon>();  
+
+            return true;
          
         }
 
