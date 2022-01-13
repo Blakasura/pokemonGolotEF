@@ -89,6 +89,17 @@ namespace Controllers
             return (players.Count<Jugador>() != 0);
         }
 
+        [HttpPost]
+        [Route("Pokeparada")]
+        public HttpResponseMessage addPokeparada([FromBody] Pokeparada newPokeparada)
+        {
+                newPokeparada.id_pokeparada = context.Pokeparades.Count() + 1;
+
+                context.Pokeparades.Add(newPokeparada);
+                context.SaveChangesAsync();
+                return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+        }
+
 
         [HttpPost]
         [Route("addPlayer")]
@@ -114,7 +125,7 @@ namespace Controllers
           //  } else { 
 
                // var response = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
-               // response.Content = new StringContent("Aquest correu electrònic s'està fent servir per un altre compte");
+               // response.Content = new StringContent("Aquest correu electrï¿½nic s'estï¿½ fent servir per un altre compte");
                // return response;
                 
             //}
