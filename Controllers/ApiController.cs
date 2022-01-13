@@ -9,6 +9,7 @@ namespace Controllers
     public class ApiController : Controller
     {
         public static Database context = new Database();
+
         [HttpGet]
         [Route("Jugadors")]
         public async Task<List<Jugador>> GetJugadors()
@@ -23,11 +24,23 @@ namespace Controllers
         [Route("Pokemons")]
         public async Task<List<Pokemon>> GetPokemons()
         {
-            var myTask = Task.Run(() => context.Pokemons.OrderBy(p => p.id_pokemon).ToList());
+            var myTask = Task.Run(() => context.Pokemons.Where(p=> p.id_pokemon <=  493).OrderBy(p => p.id_pokemon).ToList());
             List<Pokemon> pokemons = await myTask;
             Console.WriteLine("[SERVER] Query 'Pokemons' executed correctly");
             return pokemons;
         }
+
+        /*[HttpGet]
+        [Route("Pokedex")]
+        public async Task<List<Pokedex>> GetPokedex()
+        {
+            var myTask = Task.Run(() => context.Pokedexs.Where(j => j.jugadorId.Equals("xavi")).OrderBy(p => p.pokemonId).ToList());
+            List<Pokedex> pokedex = await myTask;
+
+            Console.WriteLine("[SERVER] Query 'Pokedex' executed correctly");
+            return pokedex;
+
+        }*/
 
         [HttpGet]
         [Route("Moviments")]
@@ -100,6 +113,27 @@ namespace Controllers
                 return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
         }
 
+        [HttpGet]
+        [Route("Pokedex")]
+        public async Task<Boolean> GetPokedex()
+        { 
+            var getPokemons = Task.Run(() => context.Pokemons.OrderBy(p => p.id_pokemon).ToList());
+            List<Pokemon> pokemons = await getPokemons;
+
+            var getPokedex = Task.Run(() => context.Pokedexs.Where(j => j.jugadorId.Equals("xavi")).OrderBy(p => p.pokemonId).ToList());
+            List<Pokedex> pokedex = await getPokedex;
+
+            var getTipus = Task.Run(() => context.Tipus.ToList());
+            List<Tipus> tipus = await getTipus;
+
+            var getPokemonTipus = Task.Run(() => context.Pokemon_Tipus.ToList());
+            List<Pokemon_Tipus> pokemons_tipus = await getPokemonTipus;
+
+            List<pokedex_pokemon> prova = new List<pokedex_pokemon>();  
+
+            return true;
+         
+        }
 
         [HttpPost]
         [Route("addPlayer")]
@@ -120,6 +154,8 @@ namespace Controllers
 
                 context.Jugadors.Add(newPlayer);
                 context.SaveChangesAsync();
+                Console.WriteLine("[SERVER] Query 'addPlayer' executed correctly");
+                //generatePlayer(newPlayer.nom_jugador);
                 return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
 
           //  } else { 
@@ -130,6 +166,29 @@ namespace Controllers
                 
             //}
         }
+
+        /*public async void generatePlayer(string player_id)
+        {
+            var task = Task.Run(() => context.Pokemons.OrderBy(p => p.id_pokemon).ToList());
+            List<Pokemon> pokemons = await task;
+            Console.WriteLine(pokemons.Count);
+            Pokedex pokedex = new Pokedex();
+
+            foreach (Pokemon pokemon in pokemons)
+            {
+                pokedex = new Pokedex();
+
+                pokedex.jugadorId = player_id;
+                pokedex.pokemonId = pokemon.id_pokemon;
+                pokedex.vist_pokedex = 'n';
+                pokedex.caramels_pokedex = 0;
+
+                context.Pokedexs.Add(pokedex);
+            }
+
+            context.SaveChanges();d
+            Console.WriteLine("[SERVER] Task 'generatePlayer' executed correctly");
+        }*/
 
         /*public string Encrypt(string source, string key)
         {

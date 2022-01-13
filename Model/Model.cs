@@ -142,6 +142,7 @@ namespace Model
 
         // Attributes
         public string ubicacio_pokeparada { get; set; }
+        public string nom_pokeparada { get; set;}
 
         // Navigations
         public virtual ICollection<Regal>? dona_regal { get; set;}
