@@ -102,6 +102,16 @@ namespace Controllers
             return (players.Count<Jugador>() != 0);
         }
 
+        [HttpGet]
+        [Route("Pokeparades")]
+        public async Task<List<Jugador>> GetPokeparades()
+        {
+            var myTask = Task.Run(() => context.Pokeparades.ToList());
+            List<Pokeparada> pokeparades = await myTask;
+            Console.WriteLine("[SERVER] Query 'Pokeparades' executed correctly");
+            return pokeparades;
+        }
+
         [HttpPost]
         [Route("Pokeparada")]
         public HttpResponseMessage addPokeparada([FromBody] Pokeparada newPokeparada)
