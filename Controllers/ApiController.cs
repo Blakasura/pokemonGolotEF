@@ -151,7 +151,7 @@ namespace Controllers
                 pokedex_pokemon.nom_pokemon = pokemon.nom_pokemon;
                 pokedex_pokemon.rarity = pokemon.rarity;
 
-                pokedex_pokemon.tipus = pokemons_tipus.Find(pt => pt.pokemon_id == pokemon.id_pokemon).tipus.nom_tipus;
+                pokedex_pokemon.tipus = pokemons_tipus.FindAll(pt => pt.pokemon_id == pokemon.id_pokemon).tipus.nom_tipus;
 
                 pokedex_pokemons.Add(pokedex_pokemon);
 
