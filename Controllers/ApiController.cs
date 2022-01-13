@@ -104,7 +104,7 @@ namespace Controllers
 
         [HttpGet]
         [Route("Pokeparades")]
-        public async Task<List<Jugador>> GetPokeparades()
+        public async Task<List<Pokeparada>> GetPokeparades()
         {
             var myTask = Task.Run(() => context.Pokeparades.ToList());
             List<Pokeparada> pokeparades = await myTask;
