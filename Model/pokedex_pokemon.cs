@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Data;
 using Model;
 
-namespace pokemonGolot.Model
+namespace Model
 {
     public class pokedex_pokemon
     {
