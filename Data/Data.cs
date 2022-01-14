@@ -18,7 +18,7 @@ namespace Data
     {
         // Cryptography VAR
         static RSACryptoServiceProvider rsa;
-        static CspParameters cspp = new CspParameters();
+        //static CspParameters cspp = new CspParameters();
         //const string connStringFile = @".\Connection\\connString.enc";
         //const string keysFile = @".\Connection\\rsaKeys.txt";
         //const string fileDecrypted = @".\Connection\\decryptedString.txt";
@@ -294,8 +294,8 @@ namespace Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
-            optionsBuilder.UseNpgsql("Host=172.24.127.4;Port=5432;Database=pokemonGolot;Username=postgres;Password=postgres");
+            // "Host=172.24.127.4;Port=5432;Database=pokemonGolot;Username=postgres;Password=postgres"
+            optionsBuilder.UseNpgsql(decryptStringConn());
             //System.IO.File.Delete(fileDecrypted);
         }
 
@@ -309,13 +309,13 @@ namespace Data
         public void importKeys() {
             StreamReader sr = new StreamReader(keysFile);
             string keytxt = sr.ReadToEnd();
-            rsa = new RSACryptoServiceProvider(cspp);
+            rsa = new RSACryptoServiceProvider(/*cspp*/);
             rsa.FromXmlString(keytxt);
             rsa.PersistKeyInCsp = true;
             if (rsa.PublicOnly == true)
-                Console.WriteLine("Key: " + cspp.KeyContainerName + " - Public Only");
+                //Console.WriteLine("Key: " + cspp.KeyContainerName + " - Public Only");
             else
-                Console.WriteLine("Key: " + cspp.KeyContainerName + " - Full Key Pair");
+                //Console.WriteLine("Key: " + cspp.KeyContainerName + " - Full Key Pair");
             sr.Close();
         }
 
@@ -384,7 +384,6 @@ namespace Data
                 // for the decrypted file (outFs).
                 using (FileStream outFs = new FileStream(outFile, FileMode.Create))
                 {
-
                     int count = 0;
                     int offset = 0;
 
@@ -418,6 +417,94 @@ namespace Data
                 return System.IO.File.ReadAllText(fileDecrypted);
 
                }      
+        }
+
+        private void EncryptFile(string inFile)
+        {
+
+            // Create instance of Aes for
+            // symmetric encryption of the data.
+            Aes aes = Aes.Create();
+
+            // Create symmetric key on file.
+            /*
+            *   Directory.CreateDirectory(EncrFolder);
+                StreamWriter sw = new StreamWriter(SymKeyFile, false);
+                sw.BaseStream.Write(aes.Key, 0, aes.Key.Length);
+            */
+
+            ICryptoTransform transform = aes.CreateEncryptor();
+
+      
+            // Use RSACryptoServiceProvider to
+            // encrypt the AES key.
+            // rsa is previously instantiated:
+            //    rsa = new RSACryptoServiceProvider(cspp);
+            byte[] keyEncrypted = rsa.Encrypt(aes.Key, false);
+
+            // Create byte arrays to contain
+            // the length values of the key and IV.
+            byte[] LenK = new byte[4];
+            byte[] LenIV = new byte[4];
+
+            int lKey = keyEncrypted.Length;
+            LenK = BitConverter.GetBytes(lKey);
+            int lIV = aes.IV.Length;
+            LenIV = BitConverter.GetBytes(lIV);
+
+            // Write the following to the FileStream
+            // for the encrypted file (outFs):
+            // - length of the key
+            // - length of the IV
+            // - ecrypted key
+            // - the IV
+            // - the encrypted cipher content
+
+            int startFileName = inFile.LastIndexOf("\\") + 1;
+            // Change the file's extension to ".enc"
+            string outFile = EncrFolder + inFile.Substring(startFileName, inFile.LastIndexOf(".") - startFileName) + ".enc";
+
+            using (FileStream outFs = new FileStream(outFile, FileMode.Create))
+            {
+
+                outFs.Write(LenK, 0, 4);
+                outFs.Write(LenIV, 0, 4);
+                outFs.Write(keyEncrypted, 0, lKey);
+                outFs.Write(aes.IV, 0, lIV);
+
+                // Now write the cipher text using
+                // a CryptoStream for encrypting.
+                using (CryptoStream outStreamEncrypted = new CryptoStream(outFs, transform, CryptoStreamMode.Write))
+                {
+
+                    // By encrypting a chunk at
+                    // a time, you can save memory
+                    // and accommodate large files.
+                    int count = 0;
+                    int offset = 0;
+
+                    // blockSizeBytes can be any arbitrary size.
+                    int blockSizeBytes = aes.BlockSize / 8;
+                    byte[] data = new byte[blockSizeBytes];
+                    int bytesRead = 0;
+
+                    using (FileStream inFs = new FileStream(inFile, FileMode.Open))
+                    {
+                        do
+                        {
+                            count = inFs.Read(data, 0, blockSizeBytes);
+                            offset += count;
+                            outStreamEncrypted.Write(data, 0, count);
+                            bytesRead += blockSizeBytes;
+                        }
+                        while (count > 0);
+                        inFs.Close();
+                    }
+                    outStreamEncrypted.FlushFinalBlock();
+                    outStreamEncrypted.Close();
+                }
+                outFs.Close();
+            }
         }
 
     }
