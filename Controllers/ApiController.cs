@@ -215,7 +215,7 @@ namespace Controllers
                 newPlayer.nivell_jugador = initialLevel;
                 newPlayer.maxim_objectes_jugador = maxItems;
                 newPlayer.maxim_pokemons_jugador = maxPokemon;
-
+                Console.WriteLine(newPlayer.nom_jugador);
                 context.Jugadors.Add(newPlayer);
                 context.SaveChangesAsync();
                 Console.WriteLine("[SERVER] Query 'addPlayer' executed correctly");
