@@ -419,7 +419,7 @@ namespace Data
                }      
         }
 
-        public string encryptData(string inFile)
+        public string encryptData(string userInfo)
         {
 
             // Create instance of Aes for
@@ -487,7 +487,7 @@ namespace Data
                     byte[] data = new byte[blockSizeBytes];
                     int bytesRead = 0;
 
-                    using (FileStream inFs = new FileStream(inFile, FileMode.Open))
+                    using (FileStream inFs = new FileStream(fileEncrypted, FileMode.Open))
                     {
                         do
                         {
