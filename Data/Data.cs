@@ -296,7 +296,7 @@ namespace Data
         {
             // "Host=172.24.127.4;Port=5432;Database=pokemonGolot;Username=postgres;Password=postgres"
             optionsBuilder.UseNpgsql(decryptStringConn());
-            //System.IO.File.Delete(fileDecrypted);
+            System.IO.File.Delete(fileDecrypted);
         }
 
 
@@ -319,7 +319,7 @@ namespace Data
             sr.Close();
         }
 
-        static string decryptFile(string inFile) 
+        public string decryptFile(string inFile) 
         {
             // Create instance of Aes for
             // symetric decryption of the data.
@@ -419,7 +419,7 @@ namespace Data
                }      
         }
 
-        private string encryptData(string userInfo)
+        public string encryptData(string userInfo)
         {
             // Create instance of Aes for
             // symmetric encryption of the data.

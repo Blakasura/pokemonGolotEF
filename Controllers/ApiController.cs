@@ -203,14 +203,15 @@ namespace Controllers
 
             //if (context.Jugadors.First(j => j.email_jugador == newPlayer.email_jugador) == null) 
             //{ 
+                Data data = new Data();
                 const int maxItems = 350;
                 const int maxPokemon = 300;
                 const int initialLevel = 1;
 
-                importKeys();
-                newPlayer.nom_jugador = encryptData(username);
+                data.importKeys();
+                newPlayer.nom_jugador = data.encryptData( newPlayer.nom_jugador);
                 newPlayer.contrasenya_jugador = contrasenya;
-                newPlayer.email_jugador = encryptData(email);
+                newPlayer.email_jugador = data.encryptData(newPlayer.email_jugador);
                 newPlayer.nivell_jugador = initialLevel;
                 newPlayer.maxim_objectes_jugador = maxItems;
                 newPlayer.maxim_pokemons_jugador = maxPokemon;
