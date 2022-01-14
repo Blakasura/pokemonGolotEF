@@ -419,9 +419,8 @@ namespace Data
                }      
         }
 
-        private void EncryptFile(string inFile)
+        private string encryptData(string userInfo)
         {
-
             // Create instance of Aes for
             // symmetric encryption of the data.
             Aes aes = Aes.Create();
@@ -460,7 +459,6 @@ namespace Data
             // - the IV
             // - the encrypted cipher content
 
-            int startFileName = inFile.LastIndexOf("\\") + 1;
             // Change the file's extension to ".enc"
             string outFile = fileEncrypted;
 
@@ -487,7 +485,7 @@ namespace Data
                     int blockSizeBytes = aes.BlockSize / 8;
                     byte[] data = new byte[blockSizeBytes];
                     int bytesRead = 0;
-
+                    
                     using (FileStream inFs = new FileStream(inFile, FileMode.Open))
                     {
                         do
@@ -504,8 +502,10 @@ namespace Data
                     outStreamEncrypted.Close();
                 }
                 outFs.Close();
+                
             }
-        }
 
+            return File.ReadAllText();
+        }
     }
 }

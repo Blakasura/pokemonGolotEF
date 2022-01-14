@@ -200,15 +200,17 @@ namespace Controllers
         [Route("addPlayer")]
         public HttpResponseMessage addPlayer([FromBody] Jugador newPlayer)
         {
+
             //if (context.Jugadors.First(j => j.email_jugador == newPlayer.email_jugador) == null) 
             //{ 
                 const int maxItems = 350;
                 const int maxPokemon = 300;
                 const int initialLevel = 1;
 
-                // newPlayer.nom_jugador = username;
-                // newPlayer.contrasenya_jugador = contrasenya;
-                // newPlayer.email_jugador = email;
+                importKeys();
+                newPlayer.nom_jugador = encryptData(username);
+                newPlayer.contrasenya_jugador = contrasenya;
+                newPlayer.email_jugador = encryptData(email);
                 newPlayer.nivell_jugador = initialLevel;
                 newPlayer.maxim_objectes_jugador = maxItems;
                 newPlayer.maxim_pokemons_jugador = maxPokemon;
