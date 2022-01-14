@@ -312,9 +312,9 @@ namespace Data
             rsa = new RSACryptoServiceProvider(/*cspp*/);
             rsa.FromXmlString(keytxt);
             rsa.PersistKeyInCsp = true;
-            if (rsa.PublicOnly == true)
+            //if (rsa.PublicOnly == true)
                 //Console.WriteLine("Key: " + cspp.KeyContainerName + " - Public Only");
-            else
+            //else
                 //Console.WriteLine("Key: " + cspp.KeyContainerName + " - Full Key Pair");
             sr.Close();
         }
