@@ -27,7 +27,7 @@ namespace Data
 	    const string connStringFile = @"./Connection/connString.enc";
 	    const string keysFile = @"./Connection/rsaKeys.txt";
 	    const string fileDecrypted = @"./Connection/decryptedString.txt";
-
+        const string fileEncrypted = @"./Connection/encryptedString.txt";
 
         // Import all the tables from Models
 
@@ -462,7 +462,7 @@ namespace Data
 
             int startFileName = inFile.LastIndexOf("\\") + 1;
             // Change the file's extension to ".enc"
-            string outFile = EncrFolder + inFile.Substring(startFileName, inFile.LastIndexOf(".") - startFileName) + ".enc";
+            string outFile = fileEncrypted;
 
             using (FileStream outFs = new FileStream(outFile, FileMode.Create))
             {
