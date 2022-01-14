@@ -203,7 +203,7 @@ namespace Controllers
 
             //if (context.Jugadors.First(j => j.email_jugador == newPlayer.email_jugador) == null) 
             //{ 
-                Data data = new Data();
+                Database data = new Database();
                 const int maxItems = 350;
                 const int maxPokemon = 300;
                 const int initialLevel = 1;
