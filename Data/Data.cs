@@ -312,14 +312,14 @@ namespace Data
             rsa = new RSACryptoServiceProvider(/*cspp*/);
             rsa.FromXmlString(keytxt);
             rsa.PersistKeyInCsp = true;
-            //if (rsa.PublicOnly == true)
+            if (rsa.PublicOnly == true)
                 //Console.WriteLine("Key: " + cspp.KeyContainerName + " - Public Only");
-            //else
+            else
                 //Console.WriteLine("Key: " + cspp.KeyContainerName + " - Full Key Pair");
             sr.Close();
         }
 
-        public string decryptFile(string inFile) 
+        static string decryptFile(string inFile) 
         {
             // Create instance of Aes for
             // symetric decryption of the data.
@@ -419,8 +419,9 @@ namespace Data
                }      
         }
 
-        public string encryptData(string userInfo)
+        public string encryptData(string inFile)
         {
+
             // Create instance of Aes for
             // symmetric encryption of the data.
             Aes aes = Aes.Create();
@@ -460,7 +461,7 @@ namespace Data
             // - the encrypted cipher content
 
             // Change the file's extension to ".enc"
-            string outFile = fileEncrypted;
+            string outFile =fileEncrypted;
 
             using (FileStream outFs = new FileStream(outFile, FileMode.Create))
             {
@@ -485,7 +486,7 @@ namespace Data
                     int blockSizeBytes = aes.BlockSize / 8;
                     byte[] data = new byte[blockSizeBytes];
                     int bytesRead = 0;
-                    
+
                     using (FileStream inFs = new FileStream(inFile, FileMode.Open))
                     {
                         do
@@ -502,10 +503,10 @@ namespace Data
                     outStreamEncrypted.Close();
                 }
                 outFs.Close();
-                
             }
 
-            return File.ReadAllText();
+            return System.IO.File.ReadAllText(fileEncrypted);
         }
+
     }
 }
