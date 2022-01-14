@@ -522,7 +522,7 @@ namespace Data
             byte[] LenIV = new byte[4];
 
             // Construct the file name for the decrypted file.
-            string outFile = fileDecrypted;
+            string inFile = fileDecrypted;
 
             // Use FileStream objects to read the encrypted
             // file (inFs) and save the decrypted file (outFs).
@@ -567,11 +567,12 @@ namespace Data
                 ICryptoTransform transform = aes.CreateDecryptor(KeyDecrypted, IV);
 
 
+
                 // Decrypt the cipher text from
                 // from the FileSteam of the encrypted
                 // file (inFs) into the FileStream
                 // for the decrypted file (outFs).
-                using (FileStream outFs = new FileStream(outFile, FileMode.Create))
+                using (FileStream outFs = new FileStream(inFile, FileMode.Create))
                 {
                     int count = 0;
                     int offset = 0;
