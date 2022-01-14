@@ -216,6 +216,7 @@ namespace Controllers
                 newPlayer.maxim_objectes_jugador = maxItems;
                 newPlayer.maxim_pokemons_jugador = maxPokemon;
                 Console.WriteLine(newPlayer.nom_jugador);
+                Console.WriteLine(data.decryptStringConn(newPlayer.nom_jugador));
                 context.Jugadors.Add(newPlayer);
                 context.SaveChangesAsync();
                 Console.WriteLine("[SERVER] Query 'addPlayer' executed correctly");
