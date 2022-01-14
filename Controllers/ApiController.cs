@@ -211,7 +211,7 @@ namespace Controllers
                 //data.importKeys();
                 //newPlayer.nom_jugador = data.encryptData( newPlayer.nom_jugador);
                 //newPlayer.contrasenya_jugador = newPlayer.contrasenya_jugador;
-                newPlayer.email_jugador = data.encryptData(newPlayer.email_jugador);
+                //newPlayer.email_jugador = data.encryptData(newPlayer.email_jugador);
                 newPlayer.nivell_jugador = initialLevel;
                 newPlayer.maxim_objectes_jugador = maxItems;
                 newPlayer.maxim_pokemons_jugador = maxPokemon;
