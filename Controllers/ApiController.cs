@@ -24,7 +24,7 @@ namespace Controllers
         [Route("Pokemons")]
         public async Task<List<Pokemon>> GetPokemons()
         {
-            var myTask = Task.Run(() => context.Pokemons.Where(p=> p.id_pokemon <=  493).OrderBy(p => p.id_pokemon).ToList());
+            var myTask = Task.Run(() => context.Pokemons.Where(p=> p.id_pokemon <=  384).OrderBy(p => p.id_pokemon).ToList());
             List<Pokemon> pokemons = await myTask;
             Console.WriteLine("[SERVER] Query 'Pokemons' executed correctly");
             return pokemons;
