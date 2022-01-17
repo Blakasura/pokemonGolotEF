@@ -97,7 +97,7 @@ namespace Controllers
         [Route("LogIn")]
         public async Task<Boolean> LogIn([FromBody] Jugador player)
         {
-            var myTask = Task.Run(() => context.Jugadors.Where(j => j.nom_jugador.Equals(player.nom_jugador) && j.contrasenya_jugador.Equals(player.contrasenya_jugador)).ToList());
+            var myTask = Task.Run(() => context.Jugadors.Where(j => j.nom_jugador.Equals(Encryption.Crypt(player.nom_jugador)) && j.contrasenya_jugador.Equals(player.contrasenya_jugador)).ToList());
             List<Jugador> players = await myTask;
             Console.WriteLine("[SERVER] Query 'LogIn' executed correctly");
             return (players.Count<Jugador>() != 0);
