@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Data;
 using Model;
+using Security;
 
 namespace Controllers
 {
@@ -203,20 +204,18 @@ namespace Controllers
 
             //if (context.Jugadors.First(j => j.email_jugador == newPlayer.email_jugador) == null) 
             //{ 
-                //Database data = new Database();
                 const int maxItems = 350;
                 const int maxPokemon = 300;
                 const int initialLevel = 1;
 
-                //data.importKeys();
-                //newPlayer.nom_jugador = data.encryptData( newPlayer.nom_jugador);
-                //newPlayer.contrasenya_jugador = newPlayer.contrasenya_jugador;
-                //newPlayer.email_jugador = data.encryptData(newPlayer.email_jugador);
+                newPlayer.nom_jugador = Encryption.Crypt(newPlayer.nom_jugador);
+                newPlayer.contrasenya_jugador = newPlayer.contrasenya_jugador;
+                newPlayer.email_jugador = Encryption.Crypt(newPlayer.email_jugador);
                 newPlayer.nivell_jugador = initialLevel;
                 newPlayer.maxim_objectes_jugador = maxItems;
                 newPlayer.maxim_pokemons_jugador = maxPokemon;
-                //Console.WriteLine(newPlayer.nom_jugador);
-                //Console.WriteLine(data.decryptData(newPlayer.nom_jugador));
+                Console.WriteLine(newPlayer.nom_jugador);
+                Console.WriteLine(Encryption.Decrypt(newPlayer.nom_jugador));
                 context.Jugadors.Add(newPlayer);
                 context.SaveChangesAsync();
                 Console.WriteLine("[SERVER] Query 'addPlayer' executed correctly");
