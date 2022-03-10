@@ -74,15 +74,15 @@ namespace Data
             List<Pokemon_Tipus> pokemons_tipus;
             List<Evolucio> evolucions;
 
-            pokemons = await data_loading.getPokemons(pogoApi);
-            tipus = await data_loading.getTypes(pokeApi);
-            moviments = await data_loading.getMoves(pogoApi, tipus);
-            possibles_moviments = await data_loading.getPokemonMoves(pogoApi, pokemons, moviments);
-            pokemons_tipus = await data_loading.getPokemonTypes(pogoApi, pokemons, tipus);
-            evolucions = await data_loading.getPokemonEvolutions(pogoApi, pokemons);
+            //pokemons = await data_loading.getPokemons(pogoApi);
+            //tipus = await data_loading.getTypes(pokeApi);
+            //moviments = await data_loading.getMoves(pogoApi, tipus);
+            //possibles_moviments = await data_loading.getPokemonMoves(pogoApi, pokemons, moviments);
+            //pokemons_tipus = await data_loading.getPokemonTypes(pogoApi, pokemons, tipus);
+            //evolucions = await data_loading.getPokemonEvolutions(pogoApi, pokemons);
 
             /////////////////////////////////////////// DATA Configuration ///////////////////////////////////////////
-
+            /*
             mdb.Entity<Pokemon>()
                 .HasData(pokemons);
 
@@ -100,7 +100,7 @@ namespace Data
 
             mdb.Entity<Evolucio>()
                 .HasData(evolucions);
-
+            */
             /////////////////////////////////////////// CONSTRAINTS Configuration ///////////////////////////////////////////
 
             mdb.Entity<Jugador_Pokemon_Gimnas>()
