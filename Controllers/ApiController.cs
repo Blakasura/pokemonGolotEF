@@ -114,7 +114,7 @@ namespace Controllers
         }
 
         [HttpPost]
-        [Route("Pokeparada")]
+        [Route("Pokeparades/Crear")]
         public HttpResponseMessage addPokeparada([FromBody] Pokeparada newPokeparada)
         {
                 newPokeparada.id_pokeparada = context.Pokeparades.Count() + 1;
@@ -123,6 +123,29 @@ namespace Controllers
                 context.SaveChangesAsync();
                 return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
         }
+
+        [HttpPost]
+        [Route("PokemonPerJugador")]
+        public async Task<HttpResponseMessage> addPokemonPerJugadorAsync(string id_jugador, int id_pokemon)
+        {
+            Random random = new Random();
+            Jugador_Pokemon nou_pokemon = new Jugador_Pokemon();
+
+            var myTask = Task.Run(() => context.Pokemons.Where(p => p.id_pokemon == id_pokemon).ToList());
+            List<Pokemon> pokemon = await myTask;
+            nou_pokemon.pokemon = pokemon[0];
+            nou_pokemon.ubicacio_pokemon = "42.2, 22.3";
+            nou_pokemon.jugadorId = id_jugador;
+            nou_pokemon.IV_atac_jugador_pokemon = random.Next(15);
+            nou_pokemon.IV_vida_jugador_pokemon = random.Next(15);
+            nou_pokemon.IV_defensa_jugador_pokemon = random.Next(15);
+            nou_pokemon.punts_combat_jugador_pokemon = random.Next(1000, 4000);
+
+            context.Jugadors_Pokemons.Add(nou_pokemon);
+            await context.SaveChangesAsync();
+            return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+        }
+
 
         [HttpGet]
         [Route("Pokedex")]
