@@ -16,12 +16,15 @@ namespace Controllers
         [Route("Jugadors")]
         public async Task<List<Jugador>> GetJugadors()
         {
+            String nom, mail;
             var myTask = Task.Run(() => context.Jugadors.ToList());
             List<Jugador> jugadors = await myTask;
 
             foreach (Jugador jugador in jugadors) {
-                jugador.nom_jugador = Encryption.Decrypt(jugador.nom_jugador.ToString());
-                jugador.email_jugador = Encryption.Decrypt(jugador.email_jugador.ToString());
+                nom = jugador.nom_jugador;
+                mail = jugador.email_jugador;
+                jugador.nom_jugador = Encryption.Decrypt(nom);
+                jugador.email_jugador = Encryption.Decrypt(mail);
             }
             Console.WriteLine("[SERVER] Query 'Jugadors' executed correctly");
             return jugadors;
