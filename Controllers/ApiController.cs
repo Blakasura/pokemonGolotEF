@@ -34,6 +34,7 @@ namespace Controllers
                 }
             }
             Console.WriteLine("[SERVER] Query 'Jugadors' executed correctly");
+            context.SaveChanges();
             return result;
         }
 
