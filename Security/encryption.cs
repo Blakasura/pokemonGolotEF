@@ -27,7 +27,7 @@ namespace Security
             ICryptoTransform transform = algorithm.CreateDecryptor(key, iv);
             byte[] inputbuffer = Convert.FromBase64String(text);
             byte[] outputBuffer = transform.TransformFinalBlock(inputbuffer, 0, inputbuffer.Length);
-            return Encoding.Unicode.GetString(outputBuffer);
+            return Convert.ToBase64String(outputBuffer);
         }
 
     }
