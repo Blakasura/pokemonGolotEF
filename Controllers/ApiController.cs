@@ -18,16 +18,23 @@ namespace Controllers
         {
             var myTask = Task.Run(() => context.Jugadors.ToList());
             List<Jugador> jugadors = await myTask;
+            List<Jugador> result = new List<Jugador>();
+            Jugador j;
 
             foreach (Jugador jugador in jugadors) {
+
                 if (jugador.nom_jugador != "xavi") {
-                    jugador.nom_jugador = Encryption.Decrypt(jugador.nom_jugador);
-                    jugador.email_jugador = Encryption.Decrypt(jugador.email_jugador);
+                    j = new Jugador();
+                    j.nom_jugador = Encryption.Decrypt(jugador.nom_jugador);
+                    j.email_jugador = Encryption.Decrypt(jugador.email_jugador);
+                    j.nivell_jugador = jugador.nivell_jugador;
+                    j.maxim_pokemons_jugador = jugador.maxim_pokemons_jugador;
+                    j.maxim_objectes_jugador = jugador.maxim_objectes_jugador;
+                    result.Add(j);
                 }
             }
-
             Console.WriteLine("[SERVER] Query 'Jugadors' executed correctly");
-            return jugadors;
+            return result;
         }
 
         [HttpPost]
