@@ -43,10 +43,12 @@ namespace Controllers
         [Route("Jugadors/ActualitzarJugador")]
         public async Task<HttpResponseMessage> UpdateJugador(Jugador jugador)
         {
-            var myTask = Task.Run(() => context.Jugadors.Where(j =>j.nom_jugador == Encryption.Crypt(jugador.nom_jugador)).ToList());
-            List<Jugador> jugadors = await myTask;
-            if (jugadors != null) {
-                context.Jugadors.Update(jugador);
+            var myTask = Task.Run(() => context.Jugadors.FirstOrDefault(j =>j.nom_jugador == Encryption.Crypt(jugador.nom_jugador)));
+            Jugador j = await myTask;
+            if (j != null) {
+                j.nom_jugador = jugador.nom_jugador;
+                j.email_jugador = jugador.email_jugador;
+                j.contrasenya_jugador = jugador.contrasenya_jugador;
                 await context.SaveChangesAsync();
             } 
             
