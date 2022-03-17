@@ -26,7 +26,7 @@ namespace Controllers
             return jugadors;
         }
 
-        [HttpPost]
+        /*[HttpPost]
         [Route("Jugadors/ActualitzarJugador")]
         public async Task<HttpResponseMessage> UpdateJugador(Jugador jugador)
         {
@@ -39,7 +39,7 @@ namespace Controllers
             
             Console.WriteLine("[SERVER] Query 'Jugadors/ActualitzarJugador' executed correctly");
             return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
-        }
+        }*/
 
         [HttpGet]
         [Route("Pokemons")]
