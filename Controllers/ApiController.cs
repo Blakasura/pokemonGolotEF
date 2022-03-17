@@ -17,8 +17,28 @@ namespace Controllers
         {
             var myTask = Task.Run(() => context.Jugadors.ToList());
             List<Jugador> jugadors = await myTask;
+
+            foreach (Jugador jugador in jugadors) {
+                jugador.nom_jugador = Encryption.Decrypt(jugador.nom_jugador);
+                jugador.email_jugador = Encryption.Decrypt(jugador.email_jugador);
+            }
             Console.WriteLine("[SERVER] Query 'Jugadors' executed correctly");
             return jugadors;
+        }
+
+        [HttpPost]
+        [Route("Jugadors/ActualitzarJugador")]
+        public async Task<HttpResponseMessage> UpdateJugador(Jugador jugador)
+        {
+            var myTask = Task.Run(() => context.Jugadors.Where(j =>j.nom_jugador == Encryption.Crypt(jugador.nom_jugador)).ToList());
+            List<Jugador> jugadors = await myTask;
+            if (jugadors != null) {
+                context.Jugadors.Update(jugador);
+                await context.SaveChangesAsync();
+            } 
+            
+            Console.WriteLine("[SERVER] Query 'Jugadors/ActualitzarJugador' executed correctly");
+            return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
         }
 
         [HttpGet]
