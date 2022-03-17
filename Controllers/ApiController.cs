@@ -3,6 +3,7 @@ using Data;
 using Model;
 using Security;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace Controllers
 {
@@ -16,7 +17,7 @@ namespace Controllers
         [Route("Jugadors")]
         public async Task<List<Jugador>> GetJugadors()
         {
-            var myTask = Task.Run(() => context.Jugadors.ToList());
+            var myTask = Task.Run(() => context.Jugadors.AsNoTracking().ToList());
             List<Jugador> jugadors = await myTask;
             List<Jugador> result = new List<Jugador>();
             Jugador j;
