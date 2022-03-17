@@ -43,13 +43,18 @@ namespace Controllers
         [Route("Jugadors/ActualitzarJugador")]
         public HttpResponseMessage UpdateJugador(Jugador jugador)
         {
-            string nom_jugador_encriptat = Encryption.Crypt(jugador.nom_jugador);
-            var j = context.Jugadors.SingleOrDefault(j => j.nom_jugador == nom_jugador_encriptat);
-            if (j != null) {
-                j.email_jugador = jugador.email_jugador;
-                j.contrasenya_jugador = jugador.contrasenya_jugador;
-                context.SaveChanges();
-            } 
+
+            if (jugador.nom_jugador != "xavi")
+            {
+                string nom_jugador_encriptat = Encryption.Crypt(jugador.nom_jugador);
+                var j = context.Jugadors.SingleOrDefault(j => j.nom_jugador == nom_jugador_encriptat);
+                if (j != null)
+                {
+                    j.email_jugador = jugador.email_jugador;
+                    j.contrasenya_jugador = jugador.contrasenya_jugador;
+                    context.SaveChanges();
+                }
+            }
             
             Console.WriteLine("[SERVER] Query 'Jugadors/ActualitzarJugador' executed correctly");
             return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
