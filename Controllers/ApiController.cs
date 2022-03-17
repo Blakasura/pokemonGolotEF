@@ -19,14 +19,16 @@ namespace Controllers
             List<Jugador> jugadors = await myTask;
 
             foreach (Jugador jugador in jugadors) {
-                jugador.nom_jugador = Encryption.Decrypt(jugador.nom_jugador);
-                jugador.email_jugador = Encryption.Decrypt(jugador.email_jugador);
+                Console.WriteLine(Encryption.Decrypt(jugador.nom_jugador));
+                Console.WriteLine(Encryption.Decrypt(jugador.nom_jugador.GetType().Name));
+                //jugador.nom_jugador = Encryption.Decrypt(jugador.nom_jugador);
+                //jugador.email_jugador = Encryption.Decrypt(jugador.email_jugador);
             }
             Console.WriteLine("[SERVER] Query 'Jugadors' executed correctly");
             return jugadors;
         }
 
-        /*[HttpPost]
+        [HttpPost]
         [Route("Jugadors/ActualitzarJugador")]
         public async Task<HttpResponseMessage> UpdateJugador(Jugador jugador)
         {
@@ -39,7 +41,7 @@ namespace Controllers
             
             Console.WriteLine("[SERVER] Query 'Jugadors/ActualitzarJugador' executed correctly");
             return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
-        }*/
+        }
 
         [HttpGet]
         [Route("Pokemons")]
