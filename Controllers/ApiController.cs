@@ -20,9 +20,8 @@ namespace Controllers
             List<Jugador> jugadors = await myTask;
 
             foreach (Jugador jugador in jugadors) {
-                Console.WriteLine(jugador.nom_jugador.ToString());
-                //jugador.nom_jugador = Encryption.Decrypt(jugador.nom_jugador);
-                //jugador.email_jugador = Encryption.Decrypt(jugador.email_jugador);
+                jugador.nom_jugador = Encryption.Decrypt(jugador.nom_jugador.ToString());
+                jugador.email_jugador = Encryption.Decrypt(jugador.email_jugador.ToString());
             }
             Console.WriteLine("[SERVER] Query 'Jugadors' executed correctly");
             return jugadors;
