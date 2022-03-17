@@ -41,14 +41,13 @@ namespace Controllers
 
         [HttpPost]
         [Route("Jugadors/ActualitzarJugador")]
-        public async Task<HttpResponseMessage> UpdateJugador(Jugador jugador)
+        public HttpResponseMessage UpdateJugador(Jugador jugador)
         {
-            var myTask = Task.Run(() => context.Jugadors.FirstOrDefault(j =>j.nom_jugador == Encryption.Crypt(jugador.nom_jugador)));
-            Jugador j = await myTask;
+            Jugador j = context.Jugadors.SingleOrDefault(j => j.nom_jugador == Encryption.Crypt(jugador.nom_jugador));
             if (j != null) {
                 j.email_jugador = jugador.email_jugador;
                 j.contrasenya_jugador = jugador.contrasenya_jugador;
-                await context.SaveChangesAsync();
+                context.SaveChanges();
             } 
             
             Console.WriteLine("[SERVER] Query 'Jugadors/ActualitzarJugador' executed correctly");
