@@ -35,7 +35,7 @@ namespace Controllers
                 }
             }
             Console.WriteLine("[SERVER] Query 'Jugadors' executed correctly");
-            context.SaveChanges();
+            //context.SaveChanges();
             return result;
         }
 
@@ -43,14 +43,13 @@ namespace Controllers
         [Route("Jugadors/ActualitzarJugador")]
         public HttpResponseMessage UpdateJugador(Jugador jugador)
         {
-            var j = context.Jugadors.Find(Encryption.Crypt(jugador.nom_jugador));
-            //var j = context.Jugadors.SingleOrDefault(j => Encryption.Decrypt(j.nom_jugador) == jugador.nom_jugador);
+
+            var j = context.Jugadors.SingleOrDefault(j => Encryption.Decrypt(j.nom_jugador) == jugador.nom_jugador);
             if (j != null) {
                 j.email_jugador = jugador.email_jugador;
                 j.contrasenya_jugador = jugador.contrasenya_jugador;
-                context.Entry(j).CurrentValues.SetValues(j);
+                context.SaveChanges();
             } 
-           
             
             Console.WriteLine("[SERVER] Query 'Jugadors/ActualitzarJugador' executed correctly");
             return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
