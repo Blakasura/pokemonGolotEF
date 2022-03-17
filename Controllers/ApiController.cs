@@ -43,7 +43,8 @@ namespace Controllers
         [Route("Jugadors/ActualitzarJugador")]
         public HttpResponseMessage UpdateJugador(Jugador jugador)
         {
-            var j = context.Jugadors.SingleOrDefault(j => Encryption.Decrypt(j.nom_jugador)== jugador.nom_jugador);
+            string nom_jugador_encriptat = Encryption.Crypt(jugador.nom_jugador);
+            var j = context.Jugadors.SingleOrDefault(j => j.nom_jugador == nom_jugador_encriptat);
             if (j != null) {
                 j.email_jugador = jugador.email_jugador;
                 j.contrasenya_jugador = jugador.contrasenya_jugador;
