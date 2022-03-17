@@ -20,7 +20,7 @@ namespace Controllers
             List<Jugador> jugadors = await myTask;
 
             foreach (Jugador jugador in jugadors) {
-                Console.WriteLine(Encryption.Decrypt(Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(jugador.nom_jugador))));
+                Console.WriteLine(Encryption.Decrypt("uNuUTparKDXQcSAnBylPNA=="));
                 //Console.WriteLine(Encryption.Decrypt(jugador.nom_jugador));
                 //jugador.nom_jugador = Encryption.Decrypt(jugador.nom_jugador);
                 //jugador.email_jugador = Encryption.Decrypt(jugador.email_jugador);
