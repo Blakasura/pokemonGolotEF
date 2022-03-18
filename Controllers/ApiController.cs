@@ -50,7 +50,10 @@ namespace Controllers
                 if (j != null)
                 {
                     j.email_jugador = Encryption.Crypt(jugador.email_jugador);
-                    j.contrasenya_jugador = jugador.contrasenya_jugador;
+                    if (jugador.contrasenya_jugador != "")
+                    {
+                        j.contrasenya_jugador = jugador.contrasenya_jugador;
+                    }
                     context.SaveChanges();
                 }
             }
@@ -71,7 +74,7 @@ namespace Controllers
 
         [HttpPost]
         [Route("Jugadors/Pokemons")]
-        public async Task<List<Jugador_Pokemon>> GetPokemonsJugador(Jugador jugador)
+        public List<Jugador_Pokemon> GetPokemonsJugador(Jugador jugador)
         {
             Console.WriteLine("Executa query");
             if (jugador.nom_jugador != "xavi")
@@ -81,7 +84,8 @@ namespace Controllers
                 Console.WriteLine("[SERVER] Query 'Jugadors/Pokemons' executed correctly");
                 return pokemons;
             }
-            else {
+            else
+            {
                 return null;
             }
         }
@@ -176,7 +180,7 @@ namespace Controllers
 
             var myTask = Task.Run(() => context.Pokemons.Where(p => p.id_pokemon == id_pokemon).ToList());
             List<Pokemon> pokemon = await myTask;
-            var myTask2 = Task.Run(() => context.Jugadors.Where(p => Encryption.Decrypt(p.nom_jugador) == id_jugador).ToList());
+            var myTask2 = Task.Run(() => context.Jugadors.Where(p => p.nom_jugador == Encryption.Crypt(id_jugador)).ToList());
             List<Jugador> jugador = await myTask2;
 
             if (jugador != null && pokemon != null)
