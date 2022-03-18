@@ -69,17 +69,21 @@ namespace Controllers
             return pokemons;
         }
 
-        /*[HttpGet]
-        [Route("Pokedex")]
-        public async Task<List<Pokedex>> GetPokedex()
+        [HttpGet]
+        [Route("Jugadors/Pokemons")]
+        public async Task<List<Jugador_Pokemon>> GetPokemonsJugador(Jugador jugador)
         {
-            var myTask = Task.Run(() => context.Pokedexs.Where(j => j.jugadorId.Equals("xavi")).OrderBy(p => p.pokemonId).ToList());
-            List<Pokedex> pokedex = await myTask;
-
-            Console.WriteLine("[SERVER] Query 'Pokedex' executed correctly");
-            return pokedex;
-
-        }*/
+            if (jugador.nom_jugador != "xavi")
+            {
+                var myTask = Task.Run(() => context.Jugadors_Pokemons.Where(p => Encryption.Decrypt(p.jugador.nom_jugador) == jugador.nom_jugador).OrderBy(p => p.pokemon.id_pokemon).ToList());
+                List<Jugador_Pokemon> pokemons = await myTask;
+                Console.WriteLine("[SERVER] Query 'Jugadors/Pokemons' executed correctly");
+                return pokemons;
+            }
+            else {
+                return null;
+            }
+        }
 
         [HttpGet]
         [Route("Moviments")]
@@ -164,35 +168,46 @@ namespace Controllers
 
         [HttpPost]
         [Route("PokemonPerJugador")]
-        public async Task<HttpResponseMessage> addPokemonPerJugadorAsync(string id_jugador, int id_pokemon)
+        public async Task<HttpResponseMessage> addPokemonPerJugadorAsync(string id_jugador, int id_pokemon, string coordinates)
         {
             Random random = new Random();
             Jugador_Pokemon nou_pokemon = new Jugador_Pokemon();
 
             var myTask = Task.Run(() => context.Pokemons.Where(p => p.id_pokemon == id_pokemon).ToList());
             List<Pokemon> pokemon = await myTask;
-            nou_pokemon.pokemon = pokemon[0];
-            nou_pokemon.ubicacio_pokemon = "42.2, 22.3";
-            nou_pokemon.jugadorId = id_jugador;
-            nou_pokemon.IV_atac_jugador_pokemon = random.Next(15);
-            nou_pokemon.IV_vida_jugador_pokemon = random.Next(15);
-            nou_pokemon.IV_defensa_jugador_pokemon = random.Next(15);
-            nou_pokemon.punts_combat_jugador_pokemon = random.Next(1000, 4000);
+            var myTask2 = Task.Run(() => context.Jugadors.Where(p => Encryption.Decrypt(p.nom_jugador) == id_jugador).ToList());
+            List<Jugador> jugador = await myTask2;
 
-            context.Jugadors_Pokemons.Add(nou_pokemon);
-            await context.SaveChangesAsync();
-            return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+            if (jugador != null && pokemon != null)
+            {
+                nou_pokemon.pokemon = pokemon[0];
+                nou_pokemon.ubicacio_pokemon = coordinates;
+                nou_pokemon.jugadorId = id_jugador;
+                nou_pokemon.jugador = jugador[0];
+                nou_pokemon.IV_atac_jugador_pokemon = random.Next(15);
+                nou_pokemon.IV_vida_jugador_pokemon = random.Next(15);
+                nou_pokemon.IV_defensa_jugador_pokemon = random.Next(15);
+                nou_pokemon.punts_combat_jugador_pokemon = random.Next(1000, 4000);
+
+                context.Jugadors_Pokemons.Add(nou_pokemon);
+                await context.SaveChangesAsync();
+                return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+            }
+            else {
+                return new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
+            }
+
         }
 
 
         [HttpGet]
         [Route("Pokedex")]
-        public async Task<List<pokedex_pokemon>> GetPokedex()
+        public async Task<List<pokedex_pokemon>> GetPokedex(string jugador_id)
         { 
             var getPokemons = Task.Run(() => context.Pokemons.OrderBy(p => p.id_pokemon).ToList());
             List<Pokemon> pokemons = await getPokemons;
 
-            var getPokedex = Task.Run(() => context.Pokedexs.Where(j => j.jugadorId.Equals("xavi")).OrderBy(p => p.pokemonId).ToList());
+            var getPokedex = Task.Run(() => context.Pokedexs.Where(j => j.jugadorId.Equals(Encryption.Crypt(jugador_id))).OrderBy(p => p.pokemonId).ToList());
             List<Pokedex> pokedex = await getPokedex;
 
             var getTipus = Task.Run(() => context.Tipus.ToList());
@@ -247,13 +262,6 @@ namespace Controllers
 
             }
 
-            //public int id_pokemon { get; set; }
-            //public string nom_pokemon { get; set; }
-            //public string rarity { get; set; }
-            //public List<string> tipus { get; set; }
-            //public bool vist_per_jugador { get; set; }
-            //public int caramels { get; set; }
-
             return pokedex_pokemons;
          
         }
@@ -263,8 +271,6 @@ namespace Controllers
         public HttpResponseMessage addPlayer([FromBody] Jugador newPlayer)
         {
 
-            //if (context.Jugadors.First(j => j.email_jugador == newPlayer.email_jugador) == null) 
-            //{ 
                 const int maxItems = 350;
                 const int maxPokemon = 300;
                 const int initialLevel = 1;
@@ -275,62 +281,12 @@ namespace Controllers
                 newPlayer.nivell_jugador = initialLevel;
                 newPlayer.maxim_objectes_jugador = maxItems;
                 newPlayer.maxim_pokemons_jugador = maxPokemon;
-                //Console.WriteLine(newPlayer.nom_jugador);
-                //Console.WriteLine(Encryption.Decrypt(newPlayer.nom_jugador));
                 context.Jugadors.Add(newPlayer);
                 context.SaveChangesAsync();
                 Console.WriteLine("[SERVER] Query 'addPlayer' executed correctly");
-                //generatePlayer(newPlayer.nom_jugador);
                 return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
 
-          //  } else { 
-
-               // var response = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
-               // response.Content = new StringContent("Aquest correu electr�nic s'est� fent servir per un altre compte");
-               // return response;
-                
-            //}
         }
 
-        /*public async void generatePlayer(string player_id)
-        {
-            var task = Task.Run(() => context.Pokemons.OrderBy(p => p.id_pokemon).ToList());
-            List<Pokemon> pokemons = await task;
-            Console.WriteLine(pokemons.Count);
-            Pokedex pokedex = new Pokedex();
-
-            foreach (Pokemon pokemon in pokemons)
-            {
-                pokedex = new Pokedex();
-
-                pokedex.jugadorId = player_id;
-                pokedex.pokemonId = pokemon.id_pokemon;
-                pokedex.vist_pokedex = 'n';
-                pokedex.caramels_pokedex = 0;
-
-                context.Pokedexs.Add(pokedex);
-            }
-
-            context.SaveChanges();d
-            Console.WriteLine("[SERVER] Task 'generatePlayer' executed correctly");
-        }*/
-
-        /*public string Encrypt(string source, string key)
-        {
-            TripleDESCryptoServiceProvider desCryptoProvider = new TripleDESCryptoServiceProvider();
-            MD5CryptoServiceProvider hashMD5Provider = new MD5CryptoServiceProvider();
- 
-            byte[] byteHash;
-            byte[] byteBuff;
- 
-            byteHash = hashMD5Provider.ComputeHash(Encoding.UTF8.GetBytes(key));
-            desCryptoProvider.Key = byteHash;
-            desCryptoProvider.Mode = CipherMode.ECB; //CBC, CFB
-            byteBuff = Encoding.UTF8.GetBytes(source);
- 
-            string encoded = 
-                Convert.ToBase64String(desCryptoProvider.CreateEncryptor().TransformFinalBlock(byteBuff, 0, byteBuff.Length));
-            return encoded;
-        }*/
     }
 }
