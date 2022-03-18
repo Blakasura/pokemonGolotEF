@@ -69,7 +69,7 @@ namespace Controllers
             return pokemons;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("Jugadors/Pokemons")]
         public async Task<List<Jugador_Pokemon>> GetPokemonsJugador(Jugador jugador)
         {
