@@ -71,7 +71,7 @@ namespace Controllers
 
         [HttpPost]
         [Route("Jugadors/Pokemons")]
-        public List<Jugador_Pokemon> GetPokemonsJugador(Jugador jugador)
+        public async Task<List<Jugador_Pokemon>> GetPokemonsJugador(Jugador jugador)
         {
             Console.WriteLine("Executa query");
             if (jugador.nom_jugador != "xavi")
