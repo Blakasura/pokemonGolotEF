@@ -73,8 +73,10 @@ namespace Controllers
         [Route("Jugadors/Pokemons")]
         public async Task<List<Jugador_Pokemon>> GetPokemonsJugador(Jugador jugador)
         {
+            Console.WriteLine("Executa query");
             if (jugador.nom_jugador != "xavi")
             {
+                Console.WriteLine("Entra a IF");
                 var myTask = Task.Run(() => context.Jugadors_Pokemons.Where(p => Encryption.Decrypt(p.jugador.nom_jugador) == jugador.nom_jugador).OrderBy(p => p.pokemon.id_pokemon).ToList());
                 List<Jugador_Pokemon> pokemons = await myTask;
                 Console.WriteLine("[SERVER] Query 'Jugadors/Pokemons' executed correctly");
