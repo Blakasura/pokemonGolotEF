@@ -77,7 +77,7 @@ namespace Controllers
             if (jugador.nom_jugador != "xavi")
             {
                 Console.WriteLine("Entra a IF");
-                List<Jugador_Pokemon> pokemons = context.Jugadors_Pokemons.Where(p => Encryption.Decrypt(p.jugador.nom_jugador) == jugador.nom_jugador).OrderBy(p => p.pokemon.id_pokemon).ToList();
+                List<Jugador_Pokemon> pokemons = context.Jugadors_Pokemons.Where(p => p.jugador.nom_jugador == Encryption.Crypt(jugador.nom_jugador)).OrderBy(p => p.pokemon.id_pokemon).ToList();
                 Console.WriteLine("[SERVER] Query 'Jugadors/Pokemons' executed correctly");
                 return pokemons;
             }
