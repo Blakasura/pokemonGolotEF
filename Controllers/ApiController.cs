@@ -250,7 +250,6 @@ namespace Controllers
                 }
 
                 pokedex_pokemon.tipus = nom_tipus_finals;
-
                 try
                 { 
                     pokedex_pokemon.vist_per_jugador = pokedex.Find(pk => pk.pokemonId == pokemon.id_pokemon).vist_pokedex;
@@ -273,7 +272,6 @@ namespace Controllers
         [Route("addPlayer")]
         public HttpResponseMessage addPlayer([FromBody] Jugador newPlayer)
         {
-
                 const int maxItems = 350;
                 const int maxPokemon = 300;
                 const int initialLevel = 1;
@@ -288,8 +286,6 @@ namespace Controllers
                 context.SaveChangesAsync();
                 Console.WriteLine("[SERVER] Query 'addPlayer' executed correctly");
                 return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
-
         }
-
     }
 }
