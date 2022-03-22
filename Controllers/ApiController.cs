@@ -205,7 +205,7 @@ namespace Controllers
 
         [HttpPost]
         [Route("Pokedex")]
-        public async Task<List<pokedex_pokemon>> GetPokedex(string jugador_id)
+        public async Task<List<pokedex_pokemon>> GetPokedex([FromBody] string jugador_id)
         { 
             var getPokemons = Task.Run(() => context.Pokemons.OrderBy(p => p.id_pokemon).ToList());
             List<Pokemon> pokemons = await getPokemons;
