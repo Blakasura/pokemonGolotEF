@@ -203,7 +203,7 @@ namespace Controllers
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [Route("Pokedex")]
         public async Task<List<pokedex_pokemon>> GetPokedex(string jugador_id)
         { 
