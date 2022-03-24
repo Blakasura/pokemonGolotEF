@@ -171,7 +171,7 @@ namespace Controllers
 
         [HttpPost]
         [Route("PokemonPerJugador")]
-        public async Task<HttpResponseMessage> addPokemonPerJugadorAsync(string id_jugador, int id_pokemon, string coordinates)
+        public async Task<HttpResponseMessage> addPokemonPerJugadorAsync([FromBody] string id_jugador, int id_pokemon, string coordinates)
         {
             Random random = new Random();
             Jugador_Pokemon nou_pokemon = new Jugador_Pokemon();
