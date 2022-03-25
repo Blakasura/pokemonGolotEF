@@ -194,6 +194,7 @@ namespace Controllers
 
                 context.Jugadors_Pokemons.Add(nou_pokemon);
                 await context.SaveChangesAsync();
+                Console.WriteLine("[SERVER] Query 'PokemonPerJugador' executed correctly");
                 return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
             }
             else {
