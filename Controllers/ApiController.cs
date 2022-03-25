@@ -171,7 +171,7 @@ namespace Controllers
 
         [HttpPost]
         [Route("PokemonPerJugador")]
-        public async Task<HttpResponseMessage> addPokemonPerJugadorAsync([FromBody] string id_jugador, [FromBody] int id_pokemon, [FromBody] string coordinates)
+        public async Task<HttpResponseMessage> addPokemonPerJugadorAsync([FromBody] string id_jugador, int id_pokemon, string coordinates)
         {
             Console.WriteLine("[SERVER] Query 'PokemonPerJugador' executed");
             Random random = new Random();
