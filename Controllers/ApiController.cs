@@ -172,7 +172,7 @@ namespace Controllers
 
         [HttpPost]
         [Route("PokemonPerJugador")]
-        public async Task<HttpResponseMessage> addPokemonPerJugadorAsync([FromBody] pokemon_catch pToCatch)
+        public async Task<Boolean> addPokemonPerJugadorAsync([FromBody] pokemon_catch pToCatch)
         {
             Console.WriteLine("[SERVER] Query 'PokemonPerJugador' executed");
             Random random = new Random();
@@ -197,11 +197,11 @@ namespace Controllers
                 context.Jugadors_Pokemons.Add(nou_pokemon);
                 await context.SaveChangesAsync();
                 Console.WriteLine("[SERVER] Query 'PokemonPerJugador' executed correctly");
-                return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                return true;
             }
             else {
                 Console.WriteLine("[SERVER] Query 'PokemonPerJugador' executed bad");
-                return new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
+                return false;
             }
         }
 
