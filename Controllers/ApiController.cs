@@ -4,6 +4,7 @@ using Model;
 using Security;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using pokemonGolotEF.Model;
 
 namespace Controllers
 {
@@ -171,22 +172,22 @@ namespace Controllers
 
         [HttpPost]
         [Route("PokemonPerJugador")]
-        public async Task<HttpResponseMessage> addPokemonPerJugadorAsync([FromBody] string id_jugador, int id_pokemon, string coordinates)
+        public async Task<HttpResponseMessage> addPokemonPerJugadorAsync([FromBody] pokemon_catch pToCatch)
         {
             Console.WriteLine("[SERVER] Query 'PokemonPerJugador' executed");
             Random random = new Random();
             Jugador_Pokemon nou_pokemon = new Jugador_Pokemon();
 
-            var myTask = Task.Run(() => context.Pokemons.Where(p => p.id_pokemon == id_pokemon).ToList());
+            var myTask = Task.Run(() => context.Pokemons.Where(p => p.id_pokemon == pToCatch.id_pokemon).ToList());
             List<Pokemon> pokemon = await myTask;
-            var myTask2 = Task.Run(() => context.Jugadors.Where(p => p.nom_jugador == Encryption.Crypt(id_jugador)).ToList());
+            var myTask2 = Task.Run(() => context.Jugadors.Where(p => p.nom_jugador == Encryption.Crypt(pToCatch.id_jugador)).ToList());
             List<Jugador> jugador = await myTask2;
 
             if (jugador != null && pokemon != null)
             {
                 nou_pokemon.pokemon = pokemon[0];
-                nou_pokemon.ubicacio_pokemon = coordinates;
-                nou_pokemon.jugadorId = id_jugador;
+                nou_pokemon.ubicacio_pokemon = pToCatch.coordinates;
+                nou_pokemon.jugadorId = pToCatch.id_jugador;
                 nou_pokemon.jugador = jugador[0];
                 nou_pokemon.IV_atac_jugador_pokemon = random.Next(15);
                 nou_pokemon.IV_vida_jugador_pokemon = random.Next(15);
@@ -202,18 +203,17 @@ namespace Controllers
                 Console.WriteLine("[SERVER] Query 'PokemonPerJugador' executed bad");
                 return new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
             }
-
         }
 
 
         [HttpPost]
         [Route("Pokedex")]
-        public async Task<List<pokedex_pokemon>> GetPokedex([FromBody] string jugador_id)
+        public async Task<List<pokedex_pokemon>> GetPokedex([FromBody] Jugador jugador)
         { 
             var getPokemons = Task.Run(() => context.Pokemons.OrderBy(p => p.id_pokemon).ToList());
             List<Pokemon> pokemons = await getPokemons;
 
-            var getPokedex = Task.Run(() => context.Pokedexs.Where(j => j.jugadorId.Equals(Encryption.Crypt(jugador_id))).OrderBy(p => p.pokemonId).ToList());
+            var getPokedex = Task.Run(() => context.Pokedexs.Where(j => j.jugadorId.Equals(Encryption.Crypt(jugador.nom_jugador))).OrderBy(p => p.pokemonId).ToList());
             List<Pokedex> pokedex = await getPokedex;
 
             var getTipus = Task.Run(() => context.Tipus.ToList());
