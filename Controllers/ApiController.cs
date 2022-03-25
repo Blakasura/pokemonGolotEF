@@ -173,6 +173,7 @@ namespace Controllers
         [Route("PokemonPerJugador")]
         public async Task<HttpResponseMessage> addPokemonPerJugadorAsync([FromBody] string id_jugador, int id_pokemon, string coordinates)
         {
+            Console.WriteLine("[SERVER] Query 'PokemonPerJugador' executed");
             Random random = new Random();
             Jugador_Pokemon nou_pokemon = new Jugador_Pokemon();
 
@@ -198,6 +199,7 @@ namespace Controllers
                 return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
             }
             else {
+                Console.WriteLine("[SERVER] Query 'PokemonPerJugador' executed bad");
                 return new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
             }
 
